@@ -3,25 +3,35 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
-  <listener>
-    <listener-class>servlets.DependencyLoaderListener</listener-class>
-  </listener>
+    <display-name>Archetype Created Web Application</display-name>
+    <listener>
+      <listener-class>servlets.DependencyLoaderListener</listener-class>
+    </listener>
+    <!-- Users servlet and mapping -->
+    <servlet>
+      <servlet-name>userServlet</servlet-name>
+      <servlet-class>servlets.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>userServlet</servlet-name>
+      <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+    <servlet>
+      <servlet-name>employeeServlet</servlet-name>
+      <servlet-class>servlets.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>employeeServlet</servlet-name>
+      <url-pattern>/employees</url-pattern>
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>userServlet</servlet-name>
-    <servlet-class>servlets.UserServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>userServlet</servlet-name>
-    <url-pattern>/users</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>employeeServlet</servlet-name>
-    <servlet-class>servlets.UserServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>employeeServlet</servlet-name>
-    <url-pattern>/employees</url-pattern>
-  </servlet-mapping>
+  <!-- Tickets servlet and mapping -->
+    <servlet>
+      <servlet-name>tickets</servlet-name>
+      <servlet-class>servlets.TicketServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>tickets</servlet-name>
+      <url-pattern>/tickets</url-pattern>
+    </servlet-mapping>
 </web-app>

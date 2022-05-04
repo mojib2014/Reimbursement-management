@@ -1,5 +1,4 @@
-import daos.Dao;
-import daos.TicketDaoImpl;
+package daos;
 
 public class DaoFactory {
     private static Dao ticketDao;

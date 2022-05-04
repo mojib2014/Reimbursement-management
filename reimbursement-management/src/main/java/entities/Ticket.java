@@ -1,21 +1,23 @@
 package entities;
 
+import util.DateTimeZone;
+
 import java.sql.Timestamp;
 
 public class Ticket {
     private int ticket_id;
     private double amount;
     private String description;
-    private Timestamp created_at;
-    private String status;
+    private Timestamp created_at = DateTimeZone.getDateTimeZone();
+    private Timestamp updated_at = DateTimeZone.getDateTimeZone();
+    private String status = "Pending";
     private String category;
 
     public Ticket() {}
 
-    public Ticket(double amount, String description, Timestamp created_at, String status, String category) {
+    public Ticket(double amount, String description, String status, String category) {
         this.amount = amount;
         this.description = description;
-        this.created_at = created_at;
         this.status = status;
         this.category = category;
     }
@@ -25,6 +27,16 @@ public class Ticket {
         this.amount = amount;
         this.description = description;
         this.created_at = created_at;
+        this.status = status;
+        this.category = category;
+    }
+
+    public Ticket(int ticket_id, double amount, String description, Timestamp created_at, Timestamp updated_at, String status, String category) {
+        this.ticket_id = ticket_id;
+        this.amount = amount;
+        this.description = description;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
         this.status = status;
         this.category = category;
     }
@@ -55,6 +67,14 @@ public class Ticket {
 
     public Timestamp getCreated_at() {
         return created_at;
+    }
+
+    public Timestamp getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Timestamp updated_at) {
+        this.updated_at = updated_at;
     }
 
     public void setCreated_at(Timestamp created_at) {
