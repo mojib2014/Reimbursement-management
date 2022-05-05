@@ -40,10 +40,14 @@ public class TicketServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         try {
             Ticket jsonTicket = getInputFromReq(req, res);
-            res.setStatus(400);
 //            res.addCookie(Cookie "user_id=1");
-            if(jsonTicket.getAmount() <= 0) res.getWriter().print("amount can't be zero");
+            if(jsonTicket.getAmount() <= 0) {
+                res.setStatus(400);
+                res.getWriter().print("amount can't be zero");
+            }
+
             boolean daoRes = ticketDao.insert(jsonTicket);
+
             if(daoRes) {
                 res.setStatus(202);
                 res.getWriter().print("Ticket successfully created!");
