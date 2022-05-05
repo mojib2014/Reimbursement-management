@@ -10,13 +10,16 @@ public class DbFactory {
 
     public static Connection getConnection() {
         if(connection == null) {
+            boolean test = false;
+            String driver = test ? "org.h2.Driver" : "org.postgresql.Driver";
+            String configFile = test ? "test" : "development";
             try {
-                Class.forName("org.postgresql.Driver");
+                Class.forName(driver);
             }catch (ClassNotFoundException ex) {
                 System.out.println(ex.getLocalizedMessage());
             }
             try {
-                ResourceBundle bundle = ResourceBundle.getBundle("development");
+                ResourceBundle bundle = ResourceBundle.getBundle(configFile);
                 String url = bundle.getString("url");
                 String username = bundle.getString("username");
                 String password = bundle.getString("password");

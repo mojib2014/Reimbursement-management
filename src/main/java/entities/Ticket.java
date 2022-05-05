@@ -12,26 +12,30 @@ public class Ticket {
     private Timestamp updated_at = DateTimeZone.getDateTimeZone();
     private String status = "Pending";
     private String category;
+    private int user_id;
 
     public Ticket() {}
 
-    public Ticket(double amount, String description, String status, String category) {
+    // TODO: the two constructor should be considered for deletion:
+    public Ticket(double amount, String description, String status, String category, int user_id) {
         this.amount = amount;
         this.description = description;
         this.status = status;
         this.category = category;
+        this.user_id = user_id;
     }
 
-    public Ticket(int ticket_id, double amount, String description, Timestamp created_at, String status, String category) {
+    public Ticket(int ticket_id, double amount, String description, Timestamp created_at, String status, String category, int user_id) {
         this.ticket_id = ticket_id;
         this.amount = amount;
         this.description = description;
         this.created_at = created_at;
         this.status = status;
         this.category = category;
+        this.user_id = user_id;
     }
 
-    public Ticket(int ticket_id, double amount, String description, Timestamp created_at, Timestamp updated_at, String status, String category) {
+    public Ticket(int ticket_id, double amount, String description, Timestamp created_at, Timestamp updated_at, String status, String category, int user_id) {
         this.ticket_id = ticket_id;
         this.amount = amount;
         this.description = description;
@@ -39,6 +43,7 @@ public class Ticket {
         this.updated_at = updated_at;
         this.status = status;
         this.category = category;
+        this.user_id = user_id;
     }
 
     public int getTicket_id() {
@@ -95,6 +100,14 @@ public class Ticket {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     @Override

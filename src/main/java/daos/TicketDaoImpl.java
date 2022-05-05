@@ -13,34 +13,34 @@ public class TicketDaoImpl<T> implements Dao<T>{
     public TicketDaoImpl() { connection = DbFactory.getConnection();}
 
     @Override
-    public boolean insert(T data) {
+    public String insert(T data) {
         Ticket ticket = (Ticket) data;
-        String query = "INSERT INTO tickets(amount, description, created_at, status, category) VALUES(?, ?, ?, ?, ?);";
+        String query = "INSERT INTO tickets(amount, description, created_at, category, user_id) VALUES(?, ?, ?, ?, ?);";
         try {
             PreparedStatement st = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             st.setDouble(1, ticket.getAmount());
             st.setString(2, ticket.getDescription());
             st.setTimestamp(3, ticket.getCreated_at());
-            st.setString(4, ticket.getStatus());
             st.setString(5, ticket.getCategory());
+            st.setInt(6, ticket.getUser_id());
             int count = st.executeUpdate();
             if(count == 1) {
                 ResultSet res = st.getGeneratedKeys();
                 res.next();
                 int ticket_id = res.getInt("ticket_id");
                 System.out.println("Ticket successfully created: " + ticket_id);
-                return true;
+                return "Success";
             }
         }catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
         }
-        return false;
+        return "";
     }
 
     @Override
     public boolean update(T data) {
         Ticket ticket = (Ticket) data;
-        String query = "UPDATE tickets SET amount = ?, description = ?, updated_at = ? status = ? category = ? WHERE ticket_id = ?;";
+        String query = "UPDATE tickets SET amount = ?, description = ?, updated_at = ?, status = ?, category = ? WHERE ticket_id = ?;";
         try {
             PreparedStatement st = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             st.setDouble(1, ticket.getAmount());
@@ -65,7 +65,7 @@ public class TicketDaoImpl<T> implements Dao<T>{
 
     @Override
     public boolean delete(int ticket_id) {
-        String query = "DELETE FROM tickets WHERE ticket_id = ?;";
+        String query = "DELETE FROM tickets WHERE ticket_id = ? CASCADE;";
         try {
             PreparedStatement st = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             st.setInt(6, ticket_id);
@@ -84,11 +84,27 @@ public class TicketDaoImpl<T> implements Dao<T>{
     }
 
     @Override
-    public T get(int ticket_id) {
+    public T getById(int ticket_id) {
         String query = "SELECT * FROM tickets WHERE ticket_id = ?;";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, ticket_id);
+            ResultSet resultSet = st.executeQuery();
+            while (resultSet.next()) {
+                Ticket ticket = getTicketFromResultSet(resultSet);
+                return (T) ticket;
+            }
+        }catch (SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+        return null;
+    }
+
+    public T getByDate(Date date) {
+        String query = "SELECT * FROM tickets WHERE created_at::date = ?;";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setDate(1, date);
             ResultSet resultSet = st.executeQuery();
             while (resultSet.next()) {
                 Ticket ticket = getTicketFromResultSet(resultSet);
@@ -108,7 +124,6 @@ public class TicketDaoImpl<T> implements Dao<T>{
             PreparedStatement st = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             ResultSet resultSet = st.executeQuery();
             while (resultSet.next()) {
-                resultSet.next();
                 Ticket ticket = getTicketFromResultSet(resultSet);
                 tickets.add((T) ticket);
             }
@@ -127,7 +142,8 @@ public class TicketDaoImpl<T> implements Dao<T>{
             Timestamp updated_at = resultSet.getTimestamp("updated_at");
             String status = resultSet.getString("status");
             String category = resultSet.getString("category");
-            return new Ticket(ticket_id, amount, description, created_at, updated_at, status, category);
+            int user_id = resultSet.getInt("user_id");
+            return new Ticket(ticket_id, amount, description, created_at, updated_at, status, category, user_id);
         }catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
         }

@@ -4,10 +4,7 @@ import datastructure.UDArray;
 import db.DbFactory;
 import entities.User;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,23 +30,25 @@ public class UserdaoImpl<T> implements Dao <T>{
     }
 
     @Override
-    public boolean insert(T data) {
-        boolean isSuccess = false;
+    public String insert(T data) {
         User user = (User) data;
-        String query = String.format("INSERT INTO users (name, email, password, user_type)" +
-                        " VALUES ('%s', '%s', '%s', %s)", user.getName(), user.getEmail(), user.getPassword(),
-                user.getUser_type());
+        String query = "INSERT INTO users (name, email, password, user_type) VALUES (?, ?, ?, ?);";
         try {
-            Statement statement = connection.createStatement();
-            int count = statement.executeUpdate(query);
-            if (count > 1) {
-                isSuccess = true;
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getUser_type());
+            int count = statement.executeUpdate();
+            if (count > 0) {
+                return "Success";
             }
         } catch (SQLException e) {
-            System.out.println("cannot insert user");
+            System.out.println(e.getLocalizedMessage());
             e.printStackTrace();
+            return e.getLocalizedMessage();
         }
-        return isSuccess;
+        return "";
     }
 
     @Override
@@ -93,15 +92,16 @@ public class UserdaoImpl<T> implements Dao <T>{
     }
 
     @Override
-    public T get(int id) {
+    public T getById(int user_id) {
         User user = null;
-        String query = String.format("SELECT * FROM users where id = %s", id);
+        String query = String.format("SELECT * FROM users where user_id = %s", user_id);
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             rs.next();
             user = getUserFromRS(rs);
         } catch (SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
         return (T) user;
