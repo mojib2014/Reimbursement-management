@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="16604b80-af21-40d0-9d42-1bbef583743b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/java/daos/Dao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/Dao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/java/daos/DaoFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/DaoFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/java/daos/TicketDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/java/db/DbFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/DbFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/java/entities/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Ticket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/java/servlets/DependencyLoaderListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/java/servlets/TicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/java/servlets/UserServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/java/util/DateTimeZone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/DateTimeZone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/resources/development.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/resources/production.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/resources/test.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reimbursement-management/src/main/webapp/tickets.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/tickets.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entyties/Task.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entyties/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/DependencyLoaderListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/DependencyLoaderListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/TaskServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/development.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/development.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/test.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="28gB8dhq1iGuUzZGMA7CtxV1nwp" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="expanse-tracker" type="com.poratu.idea.plugins.tomcat" factoryName="SMART_TOMCAT_FACTORY">
+      <option name="adminPort" value="8005" />
+      <option name="contextPath" value="/reimbursement-management" />
+      <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
+      <option name="envOptions" />
+      <option name="passParentEnvironmentVariables" value="true" />
+      <option name="port" value="8080" />
+      <option name="tomcatInfo">
+        <TomcatInfo>
+          <option name="name" value="Apache Tomcat/9.0.62" />
+          <option name="number" value="0" />
+          <option name="path" value="$USER_HOME$/Downloads/apache-tomcat-9.0.62" />
+          <option name="version" value="9.0.62.0" />
+        </TomcatInfo>
+      </option>
+      <option name="vmOptions" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="16604b80-af21-40d0-9d42-1bbef583743b" name="Changes" comment="" />
+      <created>1651628190572</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1651628190572</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
