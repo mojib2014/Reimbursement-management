@@ -1,5 +1,5 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-src/main/resources
+./src/main/resources
 /DS_Store
