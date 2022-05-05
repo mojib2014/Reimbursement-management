@@ -1,6 +1,7 @@
 package servlets;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import daos.Dao;
 import daos.DaoFactory;
@@ -12,25 +13,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-@WebServlet(name="tickets", value = "/")
+@WebServlet(name="tickets", value = "/tickets", urlPatterns = "tickets/ticket_id")
 public class TicketServlet extends HttpServlet {
     private Dao<Ticket> ticketDao = DaoFactory.getTicketDao();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            Ticket tickets = mapper.readValue((JsonParser) ticketDao.getAll(), Ticket.class);
-            // TODO: make this get method return a list for jsp file
-            req.setAttribute("tickets", tickets); // giving jsp file access to the tickets list
-            req.getRequestDispatcher("index.jspx").forward(req,resp);
-//            System.out.println(tickets);
-//            resp.setStatus(200);
-//            resp.getWriter().print(tickets);
+            String context = req.getServletPath();
+            System.out.println(context);
+            switch (context) {
+                case "/tickets":
+                    getAllTickets(req, res);
+                    break;
+                case "/tickets/ticket_id":
+                    getTicket(req, res);
+                    break;
+            }
+
         }catch (IOException ex) {
-            resp.setStatus(500);
-            resp.getWriter().print("Something went wrong get the resource!");
+            res.setStatus(500);
+            res.getWriter().print("Something went wrong get the resource!");
             System.out.println(ex.getLocalizedMessage());
         }
     }
@@ -56,7 +61,7 @@ public class TicketServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Ticket ticket = getTicketFromReq(req, resp);
+        Ticket ticket = getInputFromReq(req, resp);
 
         ticketDao.update(ticket);
         resp.setStatus(200);
@@ -68,7 +73,25 @@ public class TicketServlet extends HttpServlet {
         super.doDelete(req, resp);
     }
 
-    private Ticket getTicketFromReq(HttpServletRequest req, HttpServletResponse res) {
+    private void getTicket(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String queryStr = req.getQueryString();
+        int ticket_id = Integer.parseInt(queryStr.split("=")[1]);
+        Ticket ticket = ticketDao.get(ticket_id);
+        String tickets = mapper.writeValueAsString(ticket);
+        res.setStatus(200);
+        res.getWriter().print(tickets);
+    }
+
+    private void getAllTickets(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Ticket> ticketList = ticketDao.getAll();
+        String tickets = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticketList);
+        res.setStatus(200);
+        res.getWriter().print(tickets);
+    }
+
+    private Ticket getInputFromReq(HttpServletRequest req, HttpServletResponse res) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
