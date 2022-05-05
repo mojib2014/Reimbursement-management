@@ -46,9 +46,9 @@ public class TicketServlet extends HttpServlet {
                 res.getWriter().print("amount can't be zero");
             }
 
-            boolean daoRes = ticketDao.insert(jsonTicket);
+            String daoRes = ticketDao.insert(jsonTicket);
 
-            if(daoRes) {
+            if(daoRes.equals("Success")) {
                 res.setStatus(202);
                 res.getWriter().print("Ticket successfully created!");
             }
