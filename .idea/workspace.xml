@@ -5,13 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16604b80-af21-40d0-9d42-1bbef583743b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/UserDaoTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daos/Dao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/Dao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Ticket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

@@ -3,5 +3,16 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-
+    <servlet>
+        <servlet-name>tickets</servlet-name>
+        <servlet-class>servlets.TicketServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>tickets</servlet-name>
+        <url-pattern>/tickets</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>tickets</servlet-name>
+        <url-pattern>/tickets/ticket</url-pattern>
+    </servlet-mapping>
 </web-app>

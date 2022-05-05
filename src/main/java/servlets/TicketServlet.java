@@ -7,15 +7,18 @@ import daos.Dao;
 import daos.DaoFactory;
 import entities.Ticket;
 
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedOptions;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
-@WebServlet(name="tickets", value = "/tickets", urlPatterns = "tickets/ticket_id")
 public class TicketServlet extends HttpServlet {
     private Dao<Ticket> ticketDao = DaoFactory.getTicketDao();
 
@@ -23,12 +26,11 @@ public class TicketServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         try {
             String context = req.getServletPath();
-            System.out.println(context);
             switch (context) {
                 case "/tickets":
                     getAllTickets(req, res);
                     break;
-                case "/tickets/ticket_id":
+                case "/tickets/ticket":
                     getTicket(req, res);
                     break;
             }
@@ -41,44 +43,56 @@ public class TicketServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         try {
-            ObjectMapper mapper = new ObjectMapper();
-
-            Ticket jsonTicket = mapper.readValue(req.getInputStream(), Ticket.class);
-            resp.setStatus(400);
-            if(jsonTicket.getAmount() <= 0) resp.getWriter().print("amount can't be zero");
-            boolean res = ticketDao.insert(jsonTicket);
-            if(res) {
-                resp.setStatus(202);
-                resp.getWriter().print("Ticket successfully created!");
+            Ticket jsonTicket = getInputFromReq(req, res);
+            res.setStatus(400);
+//            res.addCookie(Cookie "user_id=1");
+            if(jsonTicket.getAmount() <= 0) res.getWriter().print("amount can't be zero");
+            boolean daoRes = ticketDao.insert(jsonTicket);
+            if(daoRes) {
+                res.setStatus(202);
+                res.getWriter().print("Ticket successfully created!");
             }
         }catch (IOException ex) {
-            resp.setStatus(500);
-            resp.getWriter().print(ex.getLocalizedMessage());
+            res.setStatus(500);
+            res.getWriter().print(ex.getLocalizedMessage());
             System.out.println(ex.getLocalizedMessage());
         }
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Ticket ticket = getInputFromReq(req, resp);
-
-        ticketDao.update(ticket);
-        resp.setStatus(200);
-        resp.getWriter().print("Successfully updated!");
+    protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        super.doDelete(req, res);
+        Ticket ticket = getInputFromReq(req, res);
+        boolean daoRes = ticketDao.update(ticket);
+        if(daoRes) {
+            res.setStatus(200);
+            res.getWriter().print("Successfully updated!");
+        }else {
+            res.setStatus(500);
+            res.getWriter().print("Something failed");
+        }
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+    protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        super.doDelete(req, res);
+        int ticket_id = getIdFromReq(req);
+        boolean daoRes = ticketDao.delete(ticket_id);
+        if(daoRes) {
+            res.setStatus(200);
+            res.getWriter().print("Successfully deleted!");
+        }else {
+            res.setStatus(500);
+            res.getWriter().print("Something went  wrong while deleting the ticket!");
+        }
     }
 
     private void getTicket(HttpServletRequest req, HttpServletResponse res) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String queryStr = req.getQueryString();
-        int ticket_id = Integer.parseInt(queryStr.split("=")[1]);
-        Ticket ticket = ticketDao.get(ticket_id);
+        int ticket_id = getIdFromReq(req);
+        Ticket ticket = ticketDao.getById(ticket_id);
         String tickets = mapper.writeValueAsString(ticket);
         res.setStatus(200);
         res.getWriter().print(tickets);
@@ -106,5 +120,11 @@ public class TicketServlet extends HttpServlet {
             }
         }
         return null;
+    }
+
+    private int getIdFromReq(HttpServletRequest req) {
+        String queryStr = req.getQueryString();
+        int ticket_id = Integer.parseInt(queryStr.split("=")[1]);
+        return ticket_id;
     }
 }
