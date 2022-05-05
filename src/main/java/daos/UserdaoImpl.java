@@ -1,5 +1,6 @@
 package daos;
 
+import datastructure.UDArray;
 import db.DbFactory;
 import entities.User;
 
@@ -7,9 +8,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
-public class UserdaoImpl implements Dao{
+public class UserdaoImpl<T> implements Dao <T>{
 
     Connection connection;
 
@@ -31,7 +33,7 @@ public class UserdaoImpl implements Dao{
     }
 
     @Override
-    public boolean insert(Object data) {
+    public boolean insert(T data) {
         boolean isSuccess = false;
         User user = (User) data;
         String query = String.format("INSERT INTO users (name, email, password, user_type)" +
@@ -51,7 +53,7 @@ public class UserdaoImpl implements Dao{
     }
 
     @Override
-    public boolean update(Object data) {
+    public boolean update(T data) {
         boolean isSuccess = false;
         User user = (User) data;
         String query = String.format("UPDATE from users Set id = %s, name = '%s', email = '%s', password = '%s', " +
@@ -76,19 +78,50 @@ public class UserdaoImpl implements Dao{
     @Override
     public boolean delete(int id) {
         boolean isSuccess = false;
-        String query = "DELETE FROM users";
+        String query = String.format("DELETE FROM users where id = %s", id);
+        try {
+            Statement statement = connection.createStatement();
+            int count = statement.executeUpdate(query);
+            if (count > 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return isSuccess;
 
     }
 
     @Override
-    public Object get(int id) {
-        return null;
+    public T get(int id) {
+        User user = null;
+        String query = String.format("SELECT * FROM users where id = %s", id);
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            rs.next();
+            user = getUserFromRS(rs);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (T) user;
     }
 
     @Override
     public List getAll() {
-        return null;
+        List<User> users = new ArrayList<>();
+        String query = String.format("SELECT * FROM users;");
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                User user = getUserFromRS(rs);
+                users.add(user);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return users;
     }
 }
 

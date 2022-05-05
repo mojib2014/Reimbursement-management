@@ -39,7 +39,6 @@ public class TicketServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             ObjectMapper mapper = new ObjectMapper();
-
             Ticket jsonTicket = mapper.readValue(req.getInputStream(), Ticket.class);
             resp.setStatus(400);
             if(jsonTicket.getAmount() <= 0) resp.getWriter().print("amount can't be zero");
