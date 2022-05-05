@@ -1,17 +1,11 @@
 package servlets;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import daos.Dao;
 import daos.DaoFactory;
 import entities.Ticket;
 
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.annotation.processing.SupportedOptions;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
