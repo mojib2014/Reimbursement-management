@@ -32,7 +32,6 @@ public class TicketServlet extends HttpServlet {
                     getTicket(req, res);
                     break;
             }
-
         }catch (IOException ex) {
             res.setStatus(500);
             res.getWriter().print("Something went wrong get the resource!");
