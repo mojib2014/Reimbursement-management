@@ -2,9 +2,8 @@ import daos.Dao;
 import daos.DaoFactory;
 import datastructure.UDArray;
 import entities.User;
-import org.junit.Before;
-import org.junit.Test;
-import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,10 +11,11 @@ import static org.junit.Assert.assertTrue;
 public class UserDaoTest {
     private static Dao<User> userDao;
 
-    @Before
+    @BeforeEach
     public void setup() {
         userDao = DaoFactory.getUserDao();
         userDao.initTables();
+        userDao.fillTables();
     }
 
     @Test
@@ -32,7 +32,6 @@ public class UserDaoTest {
 
     @Test
     public void shouldUpdateAUser() {
-        userDao.fillTables();
         User user = new User(1,"updatedUser", "updatedUser@email.com", "user5123", "Employee");
         boolean res = userDao.update(user);
         User dbUser = userDao.getById(user.getUser_id());
@@ -44,7 +43,6 @@ public class UserDaoTest {
 
     @Test
     public void shouldDeleteUser() {
-        userDao.fillTables();
         boolean res = userDao.delete(1);
         User dbUser = userDao.getById(1);
 
@@ -54,7 +52,6 @@ public class UserDaoTest {
 
     @Test
     public void shouldGetUserById() {
-        userDao.fillTables();
         User user1 = userDao.getById(1);
         User user2 = userDao.getById(2);
         assertEquals("user1", user1.getName());
@@ -65,7 +62,6 @@ public class UserDaoTest {
 
     @Test
     public void shouldGetAllUsers() {
-        userDao.fillTables();
         UDArray<User> users = userDao.getAll();
         assertEquals(4, users.getSize());
         assertEquals(2, users.get(1).getUser_id());

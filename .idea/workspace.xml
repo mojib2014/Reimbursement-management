@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16604b80-af21-40d0-9d42-1bbef583743b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/TicketServletTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/daos/Dao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/Dao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/TicketDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TicketDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TicketServletTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TicketServletTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/UserDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/UserDaoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,9 +117,7 @@
       <option name="adminPort" value="8005" />
       <option name="contextPath" value="/reimbursement-management" />
       <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
-      <option name="envOptions">
-        <map />
-      </option>
+      <option name="envOptions" />
       <option name="passParentEnvironmentVariables" value="true" />
       <option name="port" value="8080" />
       <option name="tomcatInfo">
@@ -168,8 +166,10 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Reimbursement_management$TicketDaoTest_shouldNotDeleteTicketById.ic" NAME="TicketDaoTest.shouldNotDeleteTicketById Coverage Results" MODIFIED="1651854653969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Reimbursement_management$UserDaoTest_shouldUpdateAUser.ic" NAME="UserDaoTest.shouldUpdateAUser Coverage Results" MODIFIED="1651802932666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Reimbursement_management$UserDaoTest.ic" NAME="UserDaoTest Coverage Results" MODIFIED="1651809666265" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Reimbursement_management$TicketDaoTest.ic" NAME="TicketDaoTest Coverage Results" MODIFIED="1651810807614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Reimbursement_management$UserDaoTest.ic" NAME="UserDaoTest Coverage Results" MODIFIED="1651874311975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Reimbursement_management$TicketDaoTest.ic" NAME="TicketDaoTest Coverage Results" MODIFIED="1651874407604" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Reimbursement_management$TicketDaoTest_shouldNotUpdateATicketById.ic" NAME="TicketDaoTest.shouldNotUpdateATicketById Coverage Results" MODIFIED="1651873306098" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

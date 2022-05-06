@@ -2,9 +2,6 @@ package daos;
 
 import datastructure.UDArray;
 
-import java.sql.Date;
-import java.util.List;
-
 public interface Dao<T> {
     String insert(T data);
     boolean update(T data);
