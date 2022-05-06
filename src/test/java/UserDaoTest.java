@@ -1,11 +1,9 @@
 import daos.Dao;
 import daos.DaoFactory;
+import datastructure.UDArray;
 import entities.User;
 import org.junit.Before;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
-
-import java.sql.ResultSet;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -68,8 +66,8 @@ public class UserDaoTest {
     @Test
     public void shouldGetAllUsers() {
         userDao.fillTables();
-        List<User> users = userDao.getAll();
-        assertEquals(4, users.size());
+        UDArray<User> users = userDao.getAll();
+        assertEquals(4, users.getSize());
         assertEquals(2, users.get(1).getUser_id());
     }
 }

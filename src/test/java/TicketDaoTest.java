@@ -27,5 +27,15 @@ public class TicketDaoTest {
         String res = ticketDao.insert(ticket);
 
         assertEquals("Success", res);
+        assertEquals(1, ticket.getTicket_id());
+    }
+
+    @Test
+    public void shouldUpdateATicket() {
+        Ticket ticket = new Ticket(100.15, "description ticket 5", "category5", 1);
+        String res = ticketDao.insert(ticket);
+
+        assertEquals("Success", res);
+        assertEquals(1, ticket.getTicket_id());
     }
 }

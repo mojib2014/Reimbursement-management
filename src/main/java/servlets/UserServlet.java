@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import daos.Dao;
 import daos.DaoFactory;
+import datastructure.UDArray;
 import entities.User;
 
 import javax.servlet.ServletException;
@@ -81,7 +82,7 @@ public class UserServlet extends HttpServlet {
 
     private void getAllUsers(HttpServletRequest req, HttpServletResponse res) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        List<User> userList = userDao.getAll();
+        UDArray<User> userList = userDao.getAll();
         String users = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userList);
         res.setStatus(200);
         res.getWriter().print(users);

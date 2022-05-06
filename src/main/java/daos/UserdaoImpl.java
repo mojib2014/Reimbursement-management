@@ -126,8 +126,8 @@ public class UserdaoImpl<T> implements Dao <T>{
      * @return A custom-built array list of users
      */
     @Override
-    public List getAll() {
-        List<User> users = new ArrayList<>();
+    public UDArray getAll() {
+        UDArray<User> users = new UDArray<>();
         String query = String.format("SELECT * FROM users;");
         try {
             Statement statement = connection.createStatement();
