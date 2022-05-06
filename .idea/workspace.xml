@@ -5,20 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16604b80-af21-40d0-9d42-1bbef583743b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/TicketServletTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/daos/Dao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/Dao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/daos/UserdaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/UserdaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/datastructure/UDArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/datastructure/UDArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/UserServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/TicketDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TicketDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/UserDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/UserDaoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../../../reimbursement_coverage_report" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -55,11 +54,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TicketDaoTest.shouldInsertATicket" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TicketDaoTest.shouldDeleteTicketById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Reimbursement-management" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="TicketDaoTest" />
-      <option name="METHOD_NAME" value="shouldInsertATicket" />
+      <option name="METHOD_NAME" value="shouldDeleteTicketById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TicketDaoTest.shouldGetATicketById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Reimbursement-management" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TicketDaoTest" />
+      <option name="METHOD_NAME" value="shouldGetATicketById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TicketDaoTest.shouldGetAllTickets" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Reimbursement-management" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TicketDaoTest" />
+      <option name="METHOD_NAME" value="shouldGetAllTickets" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -70,26 +89,6 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="UserDaoTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserDaoTest.shouldInsertAUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Reimbursement-management" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UserDaoTest" />
-      <option name="METHOD_NAME" value="shouldInsertAUser" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserDaoTest.shouldUpdateAUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Reimbursement-management" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UserDaoTest" />
-      <option name="METHOD_NAME" value="shouldUpdateAUser" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -118,7 +117,9 @@
       <option name="adminPort" value="8005" />
       <option name="contextPath" value="/reimbursement-management" />
       <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
-      <option name="envOptions" />
+      <option name="envOptions">
+        <map />
+      </option>
       <option name="passParentEnvironmentVariables" value="true" />
       <option name="port" value="8080" />
       <option name="tomcatInfo">
@@ -138,9 +139,9 @@
       <list>
         <item itemvalue="JUnit.TicketDaoTest" />
         <item itemvalue="JUnit.UserDaoTest" />
-        <item itemvalue="JUnit.UserDaoTest.shouldUpdateAUser" />
-        <item itemvalue="JUnit.TicketDaoTest.shouldInsertATicket" />
-        <item itemvalue="JUnit.UserDaoTest.shouldInsertAUser" />
+        <item itemvalue="JUnit.TicketDaoTest.shouldGetAllTickets" />
+        <item itemvalue="JUnit.TicketDaoTest.shouldGetATicketById" />
+        <item itemvalue="JUnit.TicketDaoTest.shouldDeleteTicketById" />
       </list>
     </recent_temporary>
   </component>
@@ -168,6 +169,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Reimbursement_management$UserDaoTest_shouldUpdateAUser.ic" NAME="UserDaoTest.shouldUpdateAUser Coverage Results" MODIFIED="1651802932666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Reimbursement_management$UserDaoTest.ic" NAME="UserDaoTest Coverage Results" MODIFIED="1651802971045" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Reimbursement_management$UserDaoTest.ic" NAME="UserDaoTest Coverage Results" MODIFIED="1651809666265" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Reimbursement_management$TicketDaoTest.ic" NAME="TicketDaoTest Coverage Results" MODIFIED="1651810807614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
 
 public class TicketServlet extends HttpServlet {
     private Dao<Ticket> ticketDao = DaoFactory.getTicketDao();

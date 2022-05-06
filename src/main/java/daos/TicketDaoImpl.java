@@ -17,6 +17,7 @@ public class TicketDaoImpl<T> implements Dao<T>{
     public String insert(T data) {
         Ticket ticket = (Ticket) data;
         String query = "INSERT INTO tickets (ticket_id, amount, description, created_at, category, user_id) VALUES(default, ?, ?, ?, ?, ?);";
+        String resultString = null;
         try {
             PreparedStatement st = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             st.setDouble(1, ticket.getAmount());
@@ -31,20 +32,21 @@ public class TicketDaoImpl<T> implements Dao<T>{
                 int ticket_id = res.getInt(1);
                 ticket.setTicket_id(ticket_id);
                 System.out.println("Ticket successfully created: " + ticket_id);
-                return "Success";
+                resultString = "Success";
             }
         }catch (SQLException ex) {
             System.out.println("Inserting error: " + ex.getLocalizedMessage());
         }
-        return "";
+        return resultString;
     }
 
     @Override
     public boolean update(T data) {
         Ticket ticket = (Ticket) data;
         String query = "UPDATE tickets SET amount = ?, description = ?, updated_at = ?, status = ?, category = ? WHERE ticket_id = ?;";
+        boolean result = false;
         try {
-            PreparedStatement st = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = connection.prepareStatement(query);
             st.setDouble(1, ticket.getAmount());
             st.setString(2, ticket.getDescription());
             st.setTimestamp(3, ticket.getUpdated_at());
@@ -53,30 +55,22 @@ public class TicketDaoImpl<T> implements Dao<T>{
             st.setInt(6, ticket.getTicket_id());
             int count = st.executeUpdate();
             if(count == 1) {
-                ResultSet res = st.getGeneratedKeys();
-                res.next();
-                int ticket_id = res.getInt("ticket_id");
-                System.out.println("Ticket successfully created: " + ticket_id);
-                return true;
+                result = true;
             }
         }catch (SQLException ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println("update method: " + ex.getLocalizedMessage());
         }
-        return false;
+        return result;
     }
 
     @Override
     public boolean delete(int ticket_id) {
-        String query = "DELETE FROM tickets WHERE ticket_id = ? CASCADE;";
+        String query = "DELETE FROM tickets WHERE ticket_id = ?;";
         try {
-            PreparedStatement st = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            st.setInt(6, ticket_id);
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, ticket_id);
             int count = st.executeUpdate();
             if(count == 1) {
-                ResultSet res = st.getGeneratedKeys();
-                res.next();
-                int id = res.getInt("ticket_id");
-                System.out.println("Ticket successfully created: " + id);
                 return true;
             }
         }catch (SQLException ex) {
@@ -102,32 +96,33 @@ public class TicketDaoImpl<T> implements Dao<T>{
         return null;
     }
 
-    public T getByDate(Date date) {
-        String query = "SELECT * FROM tickets WHERE created_at::date = ?;";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setDate(1, date);
-            ResultSet resultSet = st.executeQuery();
-            while (resultSet.next()) {
-                Ticket ticket = getTicketFromResultSet(resultSet);
-                return (T) ticket;
-            }
-        }catch (SQLException ex) {
-            System.out.println(ex.getLocalizedMessage());
-        }
-        return null;
-    }
+//    public Ticket getByDate(Date date) {
+//        String query = "SELECT * FROM tickets WHERE created_at::date = ?;";
+//        try {
+//            PreparedStatement st = connection.prepareStatement(query);
+//            st.setDate(1, date);
+//            ResultSet resultSet = st.executeQuery();
+//            while (resultSet.next()) {
+//                Ticket ticket = getTicketFromResultSet(resultSet);
+//                return ticket;
+//            }
+//        }catch (SQLException ex) {
+//            System.out.println(ex.getLocalizedMessage());
+//        }
+//        return null;
+//    }
 
     @Override
-    public UDArray<T> getAll() {
-        UDArray<T> tickets = new UDArray<>();
+    public UDArray getAll() {
+        UDArray<Ticket> tickets = new UDArray<>();
         String query = "SELECT * FROM tickets;";
         try {
-            PreparedStatement st = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = connection.prepareStatement(query);
             ResultSet resultSet = st.executeQuery();
             while (resultSet.next()) {
                 Ticket ticket = getTicketFromResultSet(resultSet);
-                tickets.add((T) ticket);
+                System.out.println(ticket.toString());
+                tickets.add(ticket);
             }
         }catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
@@ -156,17 +151,17 @@ public class TicketDaoImpl<T> implements Dao<T>{
 
     @Override
     public void fillTables() {
-        String query = "INSERT INTO tickets (ticket_id, amount, description, user_id) " +
-                "VALUES(1, 25.5, 'Uber from home to work', 1);";
+        String query = "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
+                "VALUES(1, 25.5, 'Uber from home to work', default, default, 1);";
         query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
-                "VALUES(2, 50.3, '', 'Hotel in CA for js conference', 2);";
+                "VALUES(2, 50.3, 'Hotel in CA for js conference', default, default, 2);";
         query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
-                "VALUES(3, 125.09, 'Work party dinner', 3);";
+                "VALUES(3, 125.09, 'Work party dinner', default, default, 3);";
         query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
-                "VALUES(4, 245.12, 'Uber work to home', 4);";
+                "VALUES(4, 245.12, 'Uber work to home', default, default, 4);";
         try {
             PreparedStatement st = connection.prepareStatement(query);
-            st.executeQuery();
+            st.executeUpdate();
         }catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
         }
