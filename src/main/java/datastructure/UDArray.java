@@ -47,5 +47,8 @@ public class UDArray <T> {
             System.out.println(this.get(i));
         }
     }
+    public int getSize() {
+        return container.length;
+    }
 
 }

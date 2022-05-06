@@ -1,5 +1,7 @@
 package daos;
 
+import datastructure.UDArray;
+
 import java.util.List;
 
 public interface Dao<T> {
@@ -7,5 +9,5 @@ public interface Dao<T> {
     boolean update(T data);
     boolean delete(int id);
     T getById(int id);
-    List<T> getAll();
+    UDArray<T> getAll();
 }

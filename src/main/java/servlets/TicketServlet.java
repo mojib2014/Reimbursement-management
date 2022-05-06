@@ -3,6 +3,7 @@ package servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import daos.Dao;
 import daos.DaoFactory;
+import datastructure.UDArray;
 import entities.Ticket;
 
 import javax.servlet.ServletException;
@@ -97,7 +98,7 @@ public class TicketServlet extends HttpServlet {
 
     private void getAllTickets(HttpServletRequest req, HttpServletResponse res) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        List<Ticket> ticketList = ticketDao.getAll();
+        UDArray<Ticket> ticketList = ticketDao.getAll();
         String tickets = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticketList);
         res.setStatus(200);
         res.getWriter().print(tickets);

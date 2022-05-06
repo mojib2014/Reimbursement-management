@@ -1,5 +1,6 @@
 package daos;
 
+import datastructure.UDArray;
 import db.DbFactory;
 import entities.Ticket;
 
@@ -117,9 +118,9 @@ public class TicketDaoImpl<T> implements Dao<T>{
     }
 
     @Override
-    public List<T> getAll() {
-        List<T> tickets = new ArrayList<>();
-        String query = "SELECT * FROM tickets;";
+    public UDArray<T> getAll() {
+        UDArray<T> tickets = new UDArray<>();
+        String query = "SELECT * FROM tickets ORDER BY created_at DES;";
         try {
             PreparedStatement st = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             ResultSet resultSet = st.executeQuery();

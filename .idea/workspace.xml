@@ -9,11 +9,10 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/daos/Dao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/Dao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/daos/UserdaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/UserdaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/DbFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/DbFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Ticket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/datastructure/UDArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/datastructure/UDArray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/servlets/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/UserServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +42,10 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="C:/ProjectResources/apache-tomcat-9.0.62/apache-tomcat-9.0.62" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.20229885" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="com.poratu.idea.plugins.tomcat" factoryName="SMART_TOMCAT_FACTORY">
@@ -76,8 +78,8 @@
       <option name="tomcatInfo">
         <TomcatInfo>
           <option name="name" value="Apache Tomcat/9.0.62" />
-          <option name="number" value="0" />
-          <option name="path" value="$USER_HOME$/Downloads/apache-tomcat-9.0.62" />
+          <option name="number" value="1" />
+          <option name="path" value="C:\ProjectResources\apache-tomcat-9.0.62\apache-tomcat-9.0.62" />
           <option name="version" value="9.0.62.0" />
         </TomcatInfo>
       </option>

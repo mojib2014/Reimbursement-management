@@ -108,9 +108,9 @@ public class UserdaoImpl<T> implements Dao <T>{
     }
 
     @Override
-    public List getAll() {
-        List<User> users = new ArrayList<>();
-        String query = String.format("SELECT * FROM users;");
+    public UDArray getAll() {
+        UDArray<User> users = new UDArray<>();
+        String query = String.format("SELECT * FROM users ORDER BY id DESC;");
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
