@@ -1,16 +1,24 @@
 package daos;
 
-public class DaoFactory {
-    private static Dao ticketDao;
-    private static Dao userDao;
+import entities.Ticket;
+import entities.User;
 
-    public static Dao getTicketDao() {
+public class DaoFactory {
+    private static Dao<Ticket> ticketDao;
+    private static Dao<User> userDao;
+
+    /**
+     * Intentionally disallow instantiating this class
+     */
+    private DaoFactory() {}
+
+    public static Dao<Ticket> getTicketDao() {
         if(ticketDao == null) {
             ticketDao = new TicketDaoImpl();
         }
         return ticketDao;
     }
-    public static Dao getUserDao() {
+    public static Dao<User> getUserDao() {
         if(userDao == null) {
             userDao = new UserdaoImpl();
         }

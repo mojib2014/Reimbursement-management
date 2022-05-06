@@ -15,24 +15,25 @@ public class TicketDaoImpl<T> implements Dao<T>{
     @Override
     public String insert(T data) {
         Ticket ticket = (Ticket) data;
-        String query = "INSERT INTO tickets(amount, description, created_at, category, user_id) VALUES(?, ?, ?, ?, ?);";
+        String query = "INSERT INTO tickets (ticket_id, amount, description, created_at, category, user_id) VALUES(default, ?, ?, ?, ?, ?);";
         try {
             PreparedStatement st = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             st.setDouble(1, ticket.getAmount());
             st.setString(2, ticket.getDescription());
             st.setTimestamp(3, ticket.getCreated_at());
-            st.setString(5, ticket.getCategory());
-            st.setInt(6, ticket.getUser_id());
+            st.setString(4, ticket.getCategory());
+            st.setInt(5, ticket.getUser_id());
             int count = st.executeUpdate();
             if(count == 1) {
                 ResultSet res = st.getGeneratedKeys();
                 res.next();
-                int ticket_id = res.getInt("ticket_id");
+                int ticket_id = res.getInt(1);
+                ticket.setTicket_id(ticket_id);
                 System.out.println("Ticket successfully created: " + ticket_id);
                 return "Success";
             }
         }catch (SQLException ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println("Inserting error: " + ex.getLocalizedMessage());
         }
         return "";
     }
@@ -132,6 +133,44 @@ public class TicketDaoImpl<T> implements Dao<T>{
         }
         return tickets;
     }
+
+    /**
+     * Setup for H2 database tests
+     */
+    @Override
+    public void initTables() {
+        String query = "CREATE TABLE IF NOT EXISTS tickets(ticket_id serial primary key, amount float8 not null check(amount >0), " +
+                "description varchar(100) not null, " +
+                "created_at timestamp default(Current_timestamp), " +
+                "updated_at timestamp, " +
+                "status varchar(50) default('Pending'), category varchar(100), user_id int references users(user_id) ON DELETE CASCADE);";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeUpdate();
+        }catch (SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void fillTables() {
+        String query = "INSERT INTO tickets (ticket_id, amount, description, user_id) " +
+                "VALUES(1, 25.5, 'Uber from home to work', 1);";
+        query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
+                "VALUES(2, 50.3, '', 'Hotel in CA for js conference', 2);";
+        query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
+                "VALUES(3, 125.09, 'Work party dinner', 3);";
+        query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
+                "VALUES(4, 245.12, 'Uber work to home', 4);";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeQuery();
+        }catch (SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+    }
+    // End of test setup
 
     private Ticket getTicketFromResultSet(ResultSet resultSet) {
         try {

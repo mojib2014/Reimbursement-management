@@ -6,11 +6,17 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DbFactory {
-    private static Connection connection;
+    private static Connection connection = null;
+
+    /**
+     * Intentionally disallow instantiation of this class
+     * @return
+     */
+    private DbFactory() {}
 
     public static Connection getConnection() {
         if(connection == null) {
-            boolean test = false;
+            boolean test = true;
             String driver = test ? "org.h2.Driver" : "org.postgresql.Driver";
             String configFile = test ? "test" : "development";
             try {

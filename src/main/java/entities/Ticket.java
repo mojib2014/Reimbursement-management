@@ -17,7 +17,7 @@ public class Ticket {
     public Ticket() {}
 
     // TODO: the two constructor should be considered for deletion:
-    public Ticket(double amount, String description, String status, String category, int user_id) {
+    public Ticket(double amount, String description, String category, int user_id) {
         this.amount = amount;
         this.description = description;
         this.status = status;

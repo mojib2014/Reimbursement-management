@@ -8,4 +8,9 @@ public interface Dao<T> {
     boolean delete(int id);
     T getById(int id);
     List<T> getAll();
+    /**
+     * For H2 database tests
+     */
+    void initTables();
+    void fillTables();
 }
