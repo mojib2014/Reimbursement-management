@@ -16,7 +16,7 @@ public class DbFactory {
 
     public static Connection getConnection() {
         if(connection == null) {
-            boolean test = false;
+            boolean test = true;
             String driver = test ? "org.h2.Driver" : "org.postgresql.Driver";
             String configFile = test ? "test" : "development";
             try {

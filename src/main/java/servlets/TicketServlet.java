@@ -29,7 +29,7 @@ public class TicketServlet extends HttpServlet {
            out.print(tickets);
            return;
         }
-        String ticket = getTicket(id);
+        Ticket ticket = getTicket(id);
         out.print(ticket);
     }
 
@@ -50,6 +50,7 @@ public class TicketServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         Ticket ticket = getInputFromReq(req, res);
+        System.out.println("doPut:" + ticket);
         boolean daoRes = ticketDao.update(ticket);
         if(daoRes) {
             res.setStatus(200);
@@ -77,16 +78,16 @@ public class TicketServlet extends HttpServlet {
         }
     }
 
-    private String getTicket(int id) throws IOException {
+    private Ticket getTicket(int id) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(ticketDao.getById(id));
+        return ticketDao.getById(id);
     }
 
     private String getAllTickets() {
         try {
             ObjectMapper mapper = new ObjectMapper();
             UDArray<Ticket> tickets = ticketDao.getAll();
-            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tickets);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tickets.getContainer());
         }catch (IOException ex) {
             System.out.println(ex.getLocalizedMessage());
         }
@@ -96,7 +97,8 @@ public class TicketServlet extends HttpServlet {
     private Ticket getInputFromReq(HttpServletRequest req, HttpServletResponse res) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
+            System.out.println("req.getReader: " + req.getReader().readLine());
+            Ticket ticket = mapper.readValue(req.getReader(), Ticket.class);
             return ticket;
         }catch (IOException ex) {
             try {

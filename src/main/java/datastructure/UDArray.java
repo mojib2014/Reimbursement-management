@@ -1,31 +1,26 @@
 package datastructure;
 
-import java.util.Collections;
-
 public class UDArray <T> {
-    private int capacity;
-    private int size;
+    private int capacity = 1;
+    private int size = 0;
     private Object[] container;
     
     public UDArray() {
-        this.capacity = 5;
-        this.size = 0;
         this.container = new Object[this.capacity];
     }
 
     private void resize() {
         this.capacity = this.capacity * 2;
         Object[] arr = new Object[capacity];
-        int size = this.size;
-        for (int i = 0; i < size; i++) {
+
+        for (int i = 0; i < this.size; i++) {
             arr[i] = container[i];
         }
         this.container = arr;
-        System.out.println("resized");
     }
 
     public void add(T data) {
-        if (size == capacity-2) {
+        if (size == container.length) {
             resize();
         }
         container[size++] = data;
@@ -52,7 +47,7 @@ public class UDArray <T> {
         return size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public Object[] getContainer() {
+        return container;
     }
 }

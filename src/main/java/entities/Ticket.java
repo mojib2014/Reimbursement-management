@@ -112,15 +112,15 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket{" +
-                "ticket_id=" + ticket_id +
-                ", amount=" + amount +
-                ", description='" + description + '\'' +
-                ", created_at=" + created_at +
-                ", updated_at=" + updated_at +
-                ", status='" + status + '\'' +
-                ", category='" + category + '\'' +
-                ", user_id=" + user_id +
+        return "{" +
+                "ticket_id : " + ticket_id +
+                ", amount : " + amount +
+                ", description : " + description + '\'' +
+                ", created_at : " + created_at +
+                ", updated_at : " + updated_at +
+                ", status : " + status + '\'' +
+                ", category : " + category + '\'' +
+                ", user_id : " + user_id +
                 '}';
     }
 }
