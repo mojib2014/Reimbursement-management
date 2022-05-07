@@ -5,11 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16604b80-af21-40d0-9d42-1bbef583743b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/daos/Dao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/Dao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TicketDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TicketDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TicketServletTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TicketServletTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/UserDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/UserDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/DbFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/DbFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Ticket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TicketDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/daos/TicketDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TicketServletTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/servlets/TestTicketServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/UserDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/daos/UserDaoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,40 +50,58 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="JUnit.TicketDaoTest">
-    <configuration name="TicketDaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="daos" />
+      <recent name="servlets" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.TestTicketServlet">
+    <configuration name="TestTicketServlet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Reimbursement-management" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TicketDaoTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="servlets.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="servlets" />
+      <option name="MAIN_CLASS_NAME" value="servlets.TestTicketServlet" />
+      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TicketDaoTest.shouldDeleteTicketById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestTicketServlet.shouldGetTicketById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Reimbursement-management" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TicketDaoTest" />
-      <option name="METHOD_NAME" value="shouldDeleteTicketById" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="servlets.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="servlets" />
+      <option name="MAIN_CLASS_NAME" value="servlets.TestTicketServlet" />
+      <option name="METHOD_NAME" value="shouldGetTicketById" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TicketDaoTest.shouldGetATicketById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TicketDaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Reimbursement-management" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TicketDaoTest" />
-      <option name="METHOD_NAME" value="shouldGetATicketById" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="daos" />
+      <option name="MAIN_CLASS_NAME" value="daos.TicketDaoTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="TicketDaoTest.shouldGetAllTickets" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Reimbursement-management" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TicketDaoTest" />
+      <option name="PACKAGE_NAME" value="daos" />
+      <option name="MAIN_CLASS_NAME" value="daos.TicketDaoTest" />
       <option name="METHOD_NAME" value="shouldGetAllTickets" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -86,8 +110,8 @@
     </configuration>
     <configuration name="UserDaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Reimbursement-management" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="UserDaoTest" />
+      <option name="PACKAGE_NAME" value="daos" />
+      <option name="MAIN_CLASS_NAME" value="daos.UserDaoTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -117,7 +141,9 @@
       <option name="adminPort" value="8005" />
       <option name="contextPath" value="/reimbursement-management" />
       <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
-      <option name="envOptions" />
+      <option name="envOptions">
+        <map />
+      </option>
       <option name="passParentEnvironmentVariables" value="true" />
       <option name="port" value="8080" />
       <option name="tomcatInfo">
@@ -133,13 +159,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.TestTicketServlet" />
+      <item itemvalue="JUnit.TestTicketServlet.shouldGetTicketById" />
+      <item itemvalue="JUnit.TicketDaoTest" />
+      <item itemvalue="JUnit.TicketDaoTest.shouldGetAllTickets" />
+      <item itemvalue="JUnit.UserDaoTest" />
+      <item itemvalue="Smart Tomcat.expanse-tracker" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestTicketServlet" />
+        <item itemvalue="JUnit.TestTicketServlet.shouldGetTicketById" />
         <item itemvalue="JUnit.TicketDaoTest" />
         <item itemvalue="JUnit.UserDaoTest" />
         <item itemvalue="JUnit.TicketDaoTest.shouldGetAllTickets" />
-        <item itemvalue="JUnit.TicketDaoTest.shouldGetATicketById" />
-        <item itemvalue="JUnit.TicketDaoTest.shouldDeleteTicketById" />
       </list>
     </recent_temporary>
   </component>

@@ -3,11 +3,24 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
+    <display-name>Reimbursement Management</display-name>
     <!-- users -->
     <servlet>
         <servlet-name>users</servlet-name>
         <servlet-class>servlets.UserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>user</servlet-name>
+        <servlet-class>servlets.UserServlet</servlet-class>
+    </servlet>
+    <!-- tickets -->
+    <servlet>
+        <servlet-name>tickets</servlet-name>
+        <servlet-class>servlets.TicketServlet</servlet-class>
+    </servlet>
+
+    <!-- Mappings -->
+    <!-- user mapping -->
     <servlet-mapping>
         <servlet-name>users</servlet-name>
         <url-pattern>/users</url-pattern>
@@ -18,16 +31,8 @@
     </servlet-mapping>
 
     <!-- tickets -->
-    <servlet>
-        <servlet-name>tickets</servlet-name>
-        <servlet-class>servlets.TicketServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>tickets</servlet-name>
         <url-pattern>/tickets</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ticket</servlet-name>
-        <url-pattern>/tickets/ticket</url-pattern>
     </servlet-mapping>
 </web-app>

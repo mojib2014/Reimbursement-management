@@ -121,7 +121,6 @@ public class TicketDaoImpl<T> implements Dao<T>{
             ResultSet resultSet = st.executeQuery();
             while (resultSet.next()) {
                 Ticket ticket = getTicketFromResultSet(resultSet);
-                System.out.println(ticket.toString());
                 tickets.add(ticket);
             }
         }catch (SQLException ex) {
@@ -151,14 +150,14 @@ public class TicketDaoImpl<T> implements Dao<T>{
 
     @Override
     public void fillTables() {
-        String query = "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
-                "VALUES(1, 25.5, 'Uber from home to work', default, default, 1);";
-        query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
-                "VALUES(2, 50.3, 'Hotel in CA for js conference', default, default, 2);";
-        query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
-                "VALUES(3, 125.09, 'Work party dinner', default, default, 3);";
-        query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, user_id) " +
-                "VALUES(4, 245.12, 'Uber work to home', default, default, 4);";
+        String query = "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, status, category, user_id) " +
+                "VALUES(1, 25.5, 'Uber from home to work', default, default, 'Pending', 'Transportation', 1);";
+        query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, status, category, user_id) " +
+                "VALUES(2, 50.3, 'Hotel in CA for js conference', default, default, 'Pending', 'Accommodation', 2);";
+        query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, status, category, user_id) " +
+                "VALUES(3, 125.09, 'Work party dinner', default, default, 'Pending', 'Business party', 3);";
+        query += "INSERT INTO tickets (ticket_id, amount, description, created_at, updated_at, status, category, user_id) " +
+                "VALUES(4, 245.12, 'Uber work to home', default, default, 'Pending', 'Transportation', 4);";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.executeUpdate();

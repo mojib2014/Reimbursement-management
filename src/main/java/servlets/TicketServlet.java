@@ -12,56 +12,43 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class TicketServlet extends HttpServlet {
     private Dao<Ticket> ticketDao = DaoFactory.getTicketDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("application/json");
+        PrintWriter out = res.getWriter();
+        int id = 0;
         try {
-            String context = req.getServletPath();
-            switch (context) {
-                case "/tickets":
-                    getAllTickets(req, res);
-                    break;
-                case "/tickets/ticket":
-                    getTicket(req, res);
-                    break;
-            }
-
-        }catch (IOException ex) {
-            res.setStatus(500);
-            res.getWriter().print("Something went wrong get the resource!");
-            System.out.println(ex.getLocalizedMessage());
+            id = Integer.parseInt(req.getParameter("id"));
+        } catch (NumberFormatException e) {
+           String tickets = getAllTickets();
+           out.print(tickets);
+           return;
         }
+        String ticket = getTicket(id);
+        out.print(ticket);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        try {
-            Ticket jsonTicket = getInputFromReq(req, res);
-//            res.addCookie(Cookie "user_id=1");
-            if(jsonTicket.getAmount() <= 0) {
-                res.setStatus(400);
-                res.getWriter().print("amount can't be zero");
-            }
-
-            String daoRes = ticketDao.insert(jsonTicket);
-
-            if(daoRes.equals("Success")) {
-                res.setStatus(202);
-                res.getWriter().print("Ticket successfully created!");
-            }
-        }catch (IOException ex) {
+        PrintWriter out = res.getWriter();
+        Ticket jsonTicket = getInputFromReq(req, res);
+        String daoRes = ticketDao.insert(jsonTicket);
+        if(daoRes.equals("Success")) {
+            res.setStatus(202);
+            out.print("Ticket successfully created!");
+        }else {
             res.setStatus(500);
-            res.getWriter().print(ex.getLocalizedMessage());
-            System.out.println(ex.getLocalizedMessage());
+            out.print("Something went wrong processing your request");
         }
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        super.doDelete(req, res);
         Ticket ticket = getInputFromReq(req, res);
         boolean daoRes = ticketDao.update(ticket);
         if(daoRes) {
@@ -75,33 +62,35 @@ public class TicketServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        super.doDelete(req, res);
-        int ticket_id = getIdFromReq(req);
-        boolean daoRes = ticketDao.delete(ticket_id);
+        PrintWriter out = res.getWriter();
+        int id  = 0;
+        try {
+            id = Integer.parseInt(req.getParameter("id"));
+        }catch (NumberFormatException ex) {
+            res.setStatus(500);
+            out.print("Please enter a valid integer id");
+        }
+        boolean daoRes = ticketDao.delete(id);
         if(daoRes) {
             res.setStatus(200);
-            res.getWriter().print("Successfully deleted!");
-        }else {
-            res.setStatus(500);
-            res.getWriter().print("Something went  wrong while deleting the ticket!");
+            out.print("Successfully deleted!");
         }
     }
 
-    private void getTicket(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    private String getTicket(int id) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        int ticket_id = getIdFromReq(req);
-        Ticket ticket = ticketDao.getById(ticket_id);
-        String tickets = mapper.writeValueAsString(ticket);
-        res.setStatus(200);
-        res.getWriter().print(tickets);
+        return mapper.writeValueAsString(ticketDao.getById(id));
     }
 
-    private void getAllTickets(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        UDArray<Ticket> ticketList = ticketDao.getAll();
-        String tickets = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticketList);
-        res.setStatus(200);
-        res.getWriter().print(tickets);
+    private String getAllTickets() {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            UDArray<Ticket> tickets = ticketDao.getAll();
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tickets);
+        }catch (IOException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+        return null;
     }
 
     private Ticket getInputFromReq(HttpServletRequest req, HttpServletResponse res) {
@@ -118,11 +107,5 @@ public class TicketServlet extends HttpServlet {
             }
         }
         return null;
-    }
-
-    private int getIdFromReq(HttpServletRequest req) {
-        String queryStr = req.getQueryString();
-        int ticket_id = Integer.parseInt(queryStr.split("=")[1]);
-        return ticket_id;
     }
 }
