@@ -1,21 +1,23 @@
 package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import daos.Dao;
+import com.google.gson.Gson;
 import daos.DaoFactory;
+import daos.TicketDao;
 import datastructure.UDArray;
 import entities.Ticket;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TicketServlet extends HttpServlet {
-    private Dao<Ticket> ticketDao = DaoFactory.getTicketDao();
+    private TicketDao ticketDao = DaoFactory.getTicketDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -25,12 +27,18 @@ public class TicketServlet extends HttpServlet {
         try {
             id = Integer.parseInt(req.getParameter("id"));
         } catch (NumberFormatException e) {
-           String tickets = getAllTickets();
+            String orderBy = req.getParameter("orderBy");
+            String status = req.getParameter("status");
+            List<String> options = new ArrayList<>();
+            if(status != null) options.add(status);
+            if(orderBy != null) options.add(orderBy);
+           String tickets = getAllTickets(options);
            out.print(tickets);
            return;
         }
         Ticket ticket = getTicket(id);
-        out.print(ticket);
+        String jsonTicket = new Gson().toJson(ticket);
+        out.print(jsonTicket);
     }
 
     @Override
@@ -83,10 +91,10 @@ public class TicketServlet extends HttpServlet {
         return ticketDao.getById(id);
     }
 
-    private String getAllTickets() {
+    private String getAllTickets(List<String> options) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            UDArray<Ticket> tickets = ticketDao.getAll();
+            UDArray<Ticket> tickets = ticketDao.getAll(options);
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tickets.getContainer());
         }catch (IOException ex) {
             System.out.println(ex.getLocalizedMessage());
@@ -97,8 +105,7 @@ public class TicketServlet extends HttpServlet {
     private Ticket getInputFromReq(HttpServletRequest req, HttpServletResponse res) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            System.out.println("req.getReader: " + req.getReader().readLine());
-            Ticket ticket = mapper.readValue(req.getReader(), Ticket.class);
+            Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
             return ticket;
         }catch (IOException ex) {
             try {

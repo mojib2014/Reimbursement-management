@@ -1,20 +1,19 @@
 package daos;
 
-import daos.Dao;
-import daos.DaoFactory;
 import datastructure.UDArray;
 import entities.Ticket;
-import entities.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class TicketDaoTest {
-    private static Dao<Ticket> ticketDao;
-    private static Dao<User> userDao;
+    private static TicketDao ticketDao;
+    private static UserDao userDao;
 
     @BeforeEach
     public void setup() {
@@ -95,7 +94,9 @@ public class TicketDaoTest {
 
     @Test
     public void shouldGetAllTickets() {
-        UDArray<Ticket> tickets = ticketDao.getAll();
+        List<String> options = new ArrayList<>();
+        options.add("ASC");
+        UDArray<Ticket> tickets = ticketDao.getAll(options);
 
         assertEquals(4, tickets.getSize());
         assertEquals(1, tickets.get(0).getTicket_id());

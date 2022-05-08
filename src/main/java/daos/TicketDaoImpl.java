@@ -3,18 +3,19 @@ package daos;
 import datastructure.UDArray;
 import db.DbFactory;
 import entities.Ticket;
+import entities.User;
+import util.DateTimeZone;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
-public class TicketDaoImpl<T> implements Dao<T>{
+public class TicketDaoImpl implements TicketDao {
     private Connection connection;
 
     public TicketDaoImpl() { connection = DbFactory.getConnection();}
 
     @Override
-    public String insert(T data) {
+    public String insert(Ticket data) {
         Ticket ticket = (Ticket) data;
         String query = "INSERT INTO tickets (ticket_id, amount, description, created_at, category, user_id) VALUES(default, ?, ?, ?, ?, ?);";
         String resultString = null;
@@ -41,15 +42,15 @@ public class TicketDaoImpl<T> implements Dao<T>{
     }
 
     @Override
-    public boolean update(T data) {
+    public boolean update(Ticket data) {
         Ticket ticket = (Ticket) data;
-        String query = "UPDATE tickets SET amount = ?, description = ?, updated_at = ?, status = ?, category = ? WHERE ticket_id = ?;";
+        String query = "UPDATE tickets SET amount = ?, description = ?, updated_at = ?, category = ? WHERE ticket_id = ?;";
         boolean result = false;
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setDouble(1, ticket.getAmount());
             st.setString(2, ticket.getDescription());
-            st.setTimestamp(3, ticket.getUpdated_at());
+            st.setTimestamp(3, DateTimeZone.getDateTimeZone());
             st.setString(4, ticket.getStatus());
             st.setString(5, ticket.getCategory());
             st.setInt(6, ticket.getTicket_id());
@@ -80,7 +81,7 @@ public class TicketDaoImpl<T> implements Dao<T>{
     }
 
     @Override
-    public T getById(int ticket_id) {
+    public Ticket getById(int ticket_id) {
         String query = "SELECT * FROM tickets WHERE ticket_id = ?;";
         try {
             PreparedStatement st = connection.prepareStatement(query);
@@ -88,7 +89,7 @@ public class TicketDaoImpl<T> implements Dao<T>{
             ResultSet resultSet = st.executeQuery();
             while (resultSet.next()) {
                 Ticket ticket = getTicketFromResultSet(resultSet);
-                return (T) ticket;
+                return ticket;
             }
         }catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
@@ -113,9 +114,25 @@ public class TicketDaoImpl<T> implements Dao<T>{
 //    }
 
     @Override
-    public UDArray getAll() {
+    public UDArray getAll(List<String> options) {
         UDArray<Ticket> tickets = new UDArray<>();
-        String query = "SELECT * FROM tickets;";
+        String query = "SELECT * FROM tickets";
+        for(String option : options) {
+            switch (option) {
+                case "Pending":
+                    query += " WHERE status LIKE '%Pending'";
+                    break;
+                case "Approved":
+                    query += " WHERE status LIKE '%Approved'";
+                    break;
+                case "DESC":
+                    query += " ORDER BY created_at DESC";
+                    break;
+                default:
+                    query += " ORDER BY created_at";
+            }
+        }
+        query += ";";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet resultSet = st.executeQuery();

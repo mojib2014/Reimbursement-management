@@ -13,6 +13,32 @@
         <servlet-name>user</servlet-name>
         <servlet-class>servlets.UserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>register</servlet-name>
+        <servlet-class>servlets.UserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>login</servlet-name>
+        <servlet-class>servlets.UserServlet</servlet-class>
+    </servlet>
+
+    <!-- Managers -->
+    <servlet>
+        <servlet-name>managersViewTicketsOrTicket</servlet-name>
+        <servlet-class>servlets.ManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>managerRegister</servlet-name>
+        <servlet-class>servlets.ManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>managerLogin</servlet-name>
+        <servlet-class>servlets.ManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>managerUpdateTicket</servlet-name>
+        <servlet-class>servlets.ManagerServlet</servlet-class>
+    </servlet>
     <!-- tickets -->
     <servlet>
         <servlet-name>tickets</servlet-name>
@@ -21,7 +47,7 @@
 
     <!-- Mappings -->
 
-    <!-- user mapping -->
+    <!-- Users mapping -->
     <servlet-mapping>
         <servlet-name>users</servlet-name>
         <url-pattern>/users</url-pattern>
@@ -30,10 +56,36 @@
         <servlet-name>user</servlet-name>
         <url-pattern>/users/user</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>register</servlet-name>
+        <url-pattern>/users/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/users/login</url-pattern>
+    </servlet-mapping>
 
-    <!-- tickets Mapping -->
+    <!-- Managers Mapping -->
+    <servlet-mapping>
+        <servlet-name>managersViewTicketsOrTicket</servlet-name>
+        <url-pattern>/managers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>managerRegister</servlet-name>
+        <url-pattern>/managers/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>managerLogin</servlet-name>
+        <url-pattern>/managers/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>managerUpdateTicket</servlet-name>
+        <url-pattern>/managers/update-ticket</url-pattern>
+    </servlet-mapping>
+    <!-- Tickets Mapping -->
     <servlet-mapping>
         <servlet-name>tickets</servlet-name>
         <url-pattern>/tickets</url-pattern>
     </servlet-mapping>
+
 </web-app>

@@ -1,9 +1,9 @@
 package servlets;
 
-import daos.Dao;
 import daos.DaoFactory;
+import daos.TicketDao;
+import daos.UserDao;
 import entities.Ticket;
-import entities.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.Assert.*;
@@ -17,8 +17,8 @@ import java.io.*;
 import static org.mockito.Mockito.*;
 
 public class TestTicketServlet {
-    private static Dao<Ticket> ticketDao;
-    private static Dao<User> userDao;
+    private static TicketDao ticketDao;
+    private static UserDao userDao;
 
     @BeforeEach
     public void setup() {

@@ -1,50 +1,54 @@
 package daos;
 
-import daos.Dao;
-import daos.DaoFactory;
 import datastructure.UDArray;
 import entities.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class UserDaoTest {
-    private static Dao<User> userDao;
+    private static UserDao userDao;
 
-    @BeforeEach
+    @Before
     public void setup() {
         userDao = DaoFactory.getUserDao();
         userDao.initTables();
-        userDao.fillTables();
     }
 
     @Test
-    public void shouldInsertAUser() {
-        User user = new User(5,"user5", "user5@email.com", "user5123", "Employee");
-        String res = userDao.insert(user);
+    public void shouldRegisterAUser() {
+        User user = new User("newUser", "newUser@email.com", "user5123", "Employee");
+        User dbUser = userDao.register(user);
 
-        User dbUser = userDao.getById(user.getUser_id());
+        assertEquals("newUser", dbUser.getName());
+        assertEquals(6, dbUser.getUser_id());
+    }
 
-        assertEquals("user5", dbUser.getName());
-        assertEquals(5, dbUser.getUser_id());
-        assertEquals("Success", res);
+    @Test
+    public void shouldLoginAUser() {
+        User user = new User("login", "login@email.com", "login123", "Employee");
+        User dbUser = userDao.register(user);
+
+        User loggedInUser = userDao.login(dbUser.getEmail(), user.getPassword());
+
+        assertEquals(5, loggedInUser.getUser_id());
     }
 
     @Test
     public void shouldUpdateAUser() {
+        userDao.fillTables();
         User user = new User(1,"updatedUser", "updatedUser@email.com", "user5123", "Employee");
-        boolean res = userDao.update(user);
-        User dbUser = userDao.getById(user.getUser_id());
+        User resUser = userDao.update(user);
 
-        assertEquals("updatedUser", dbUser.getName());
-        assertEquals(1, dbUser.getUser_id());
-        assertTrue(res);
+        assertEquals("updatedUser", resUser.getName());
+        assertEquals(1, resUser.getUser_id());
     }
 
     @Test
     public void shouldDeleteUser() {
+        userDao.fillTables();
         boolean res = userDao.delete(1);
         User dbUser = userDao.getById(1);
 
@@ -54,6 +58,7 @@ public class UserDaoTest {
 
     @Test
     public void shouldGetUserById() {
+        userDao.fillTables();
         User user1 = userDao.getById(1);
         User user2 = userDao.getById(2);
         assertEquals("user1", user1.getName());
@@ -64,6 +69,7 @@ public class UserDaoTest {
 
     @Test
     public void shouldGetAllUsers() {
+        userDao.fillTables();
         UDArray<User> users = userDao.getAll();
         assertEquals(4, users.getSize());
         assertEquals(2, users.get(1).getUser_id());

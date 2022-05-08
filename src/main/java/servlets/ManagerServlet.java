@@ -2,13 +2,12 @@ package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import daos.DaoFactory;
-import daos.UserDao;
+import daos.ManagerDaoImpl;
 import datastructure.UDArray;
+import entities.Ticket;
 import entities.User;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,31 +15,47 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UserServlet extends HttpServlet {
-
-    private UserDao userDao = DaoFactory.getUserDao();
+public class ManagerServlet extends HttpServlet {
+    private ManagerDaoImpl managerDao = new ManagerDaoImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("application/json");
+        PrintWriter out = res.getWriter();
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            String endpoint = req.getServletPath();
-
-            switch (endpoint) {
-                case "/users":
-                    getAllUsers(req, res);
-                    break;
-                case "/users/user":
-                    getUser(req, res);
-                    break;
-                default:
-                    res.getWriter().print("We don't support that endpoint at the moment!");
+            out = res.getWriter();
+            int id = 0;
+            try {
+                id = Integer.parseInt(req.getParameter("id"));
+            } catch (NumberFormatException e) {
+                String status = req.getParameter("status");
+                String orderBy = req.getParameter("orderBy");
+                System.out.println(status);
+                if(orderBy == null && status == null) {
+                    res.setStatus(400);
+                    out.print("Please enter query string (orderBy=DESC or status=Pending)");
+                    return;
+                }
+                List<String> options = new ArrayList<>();
+                if(status != null) options.add(status);
+                if(orderBy != null) options.add(orderBy);
+                UDArray<Ticket> tickets = managerDao.getAllTickets(options);
+                String jsonTickets = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tickets.getContainer());
+                res.setStatus(200);
+                out.print(jsonTickets);
+                return;
             }
-        } catch (IOException ex) {
+            Ticket ticket = managerDao.getATicket(id);
+            String jsonTicket = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticket);
+            res.setStatus(200);
+            out.print(jsonTicket);
+        }catch (IOException ex) {
             res.setStatus(500);
-            res.getWriter().print(ex.getLocalizedMessage());
-            System.out.println(ex.getLocalizedMessage());
+            out.print(ex.getLocalizedMessage());
         }
     }
 
@@ -50,10 +65,10 @@ public class UserServlet extends HttpServlet {
             String endpoint = req.getServletPath();
 
             switch (endpoint) {
-                case "/users/register":
+                case "/managers/register":
                     registerUser(req, res);
                     break;
-                case "/users/login":
+                case "/managers/login":
                     loginUser(req, res);
                     break;
                 default:
@@ -69,18 +84,23 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("application/json");
         PrintWriter out = null;
-        int user_id = getUserIdFromCookies(req);
+        int user_id = getUserIdFromCookies(req, res);
+        int ticket_id = Integer.parseInt(req.getParameter("id"));
+        String status = req.getParameter("status");
         try {
             out = res.getWriter();
             if(user_id != 0) {
-                User user = getInputFromReq(req, res);
-                User updatedUser = userDao.update(user);
-                res.setStatus(204);
-                out.print(updatedUser);
+                boolean response = managerDao.updateTicketStatus(ticket_id, status);
+                if(response) {
+                    res.setStatus(202);
+                    return;
+                }
             }else {
                 res.setStatus(403);
                 out.print("Access denied, Please login or register!");
+                return;
             }
         }catch (IOException ex) {
             res.setStatus(500);
@@ -88,10 +108,6 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO: implement this if time (not in the requirement)
-    }
 
     /**
      * Helper methods
@@ -107,8 +123,8 @@ public class UserServlet extends HttpServlet {
         try {
             out = res.getWriter();
             User user = getInputFromReq(req, res);
-            user.setUser_type("Employee");
-            userDao.register(user);
+            user.setUser_type("Manager");
+            managerDao.register(user);
             res.setStatus(200);
             Cookie cookie = new Cookie("user", user.getName());
             res.addCookie(cookie);
@@ -130,7 +146,7 @@ public class UserServlet extends HttpServlet {
             out = res.getWriter();
             ObjectMapper mapper = new ObjectMapper();
             User userInput = mapper.readValue(req.getInputStream(), User.class);
-            User user = userDao.login(userInput.getEmail(), userInput.getPassword());
+            User user = managerDao.login(userInput.getEmail(), userInput.getPassword());
             if(user != null) {
                 String jsonUser = new Gson().toJson(user);
                 String name = user.getName();
@@ -149,47 +165,8 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    private void getUser(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        PrintWriter out = null;
-        try {
-            int user_id = getUserIdFromCookies(req);
-            int user_id_to_get = getIdFromReq(req, res);
-            out = res.getWriter();
-            if(user_id != 0) {
-                ObjectMapper mapper = new ObjectMapper();
-                User user = userDao.getById(user_id_to_get);
-                String jsonUser = mapper.writeValueAsString(user);
-                res.setStatus(200);
-                out.print(jsonUser);
-            } else {
-                res.setStatus(403);
-                out.print("Access denied, Please login or register!");
-            }
-        }catch (IOException ex) {
-            res.setStatus(500);
-            out.print("Something went wrong processing your request!");
-        }
-    }
+    private void updateTicket(HttpServletRequest req, HttpServletResponse res) {
 
-    private void getAllUsers(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        PrintWriter out = null;
-        try {
-            int user_id = getUserIdFromCookies(req);
-            if(user_id != 0) {
-                out = res.getWriter();
-                ObjectMapper mapper = new ObjectMapper();
-                UDArray<User> userList = userDao.getAll();
-                String users = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userList.getContainer());
-                res.setStatus(200);
-                out.print(users);
-            }else {
-                res.setStatus(403);
-                out.print("Access denied, Please login or register!");
-            }
-        }catch (IOException ex) {
-            res.setStatus(500);
-            out.print(ex.getLocalizedMessage());
-        }
     }
 
     private User getInputFromReq(HttpServletRequest req, HttpServletResponse res) {
@@ -208,23 +185,15 @@ public class UserServlet extends HttpServlet {
         return null;
     }
 
-    private int getIdFromReq(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        int id = 0;
-        try {
-            id = Integer.parseInt(req.getParameter("id"));
-        }catch (NumberFormatException ex) {
-            res.setStatus(500);
-            res.getWriter().print(ex.getLocalizedMessage());
-        }
-        return id;
-    }
-
-    private int getUserIdFromCookies(HttpServletRequest req) {
+    private int getUserIdFromCookies(HttpServletRequest req, HttpServletResponse res) throws IOException {
         Cookie[] cookies = req.getCookies();
         String cookieName = "user_id";
         String user_id = "";
-        for ( int i=0; i<cookies.length; i++) {
-            Cookie cookie = cookies[i];
+        if(cookies == null) {
+            return 0;
+        }
+
+        for (Cookie cookie : cookies) {
             if (cookieName.equals(cookie.getName()))
                 user_id += cookie.getValue();
         }
