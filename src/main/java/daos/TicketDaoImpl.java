@@ -3,7 +3,6 @@ package daos;
 import datastructure.UDArray;
 import db.DbFactory;
 import entities.Ticket;
-import entities.User;
 import util.DateTimeZone;
 
 import java.sql.*;
@@ -42,8 +41,7 @@ public class TicketDaoImpl implements TicketDao {
     }
 
     @Override
-    public boolean update(Ticket data) {
-        Ticket ticket = (Ticket) data;
+    public boolean update(Ticket ticket) {
         String query = "UPDATE tickets SET amount = ?, description = ?, updated_at = ?, category = ? WHERE ticket_id = ?;";
         boolean result = false;
         try {
@@ -51,9 +49,8 @@ public class TicketDaoImpl implements TicketDao {
             st.setDouble(1, ticket.getAmount());
             st.setString(2, ticket.getDescription());
             st.setTimestamp(3, DateTimeZone.getDateTimeZone());
-            st.setString(4, ticket.getStatus());
-            st.setString(5, ticket.getCategory());
-            st.setInt(6, ticket.getTicket_id());
+            st.setString(4, ticket.getCategory());
+            st.setInt(5, ticket.getTicket_id());
             int count = st.executeUpdate();
             if(count == 1) {
                 result = true;

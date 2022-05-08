@@ -14,7 +14,7 @@ pageEncoding="ISO-8859-1"%>
             </ul>
         </nav>
     </header>
-    <h1>Welcome Employee to home page</h1>
+    <h1>Welcome to Employee home page</h1>
     <p>This is the home page of the web app, Here you can create a ticket</p>
     <h2>Your pending tickets</h2>
    <table border="1" cellpadding="2" cellspacing="2" border-collaps="collaps">

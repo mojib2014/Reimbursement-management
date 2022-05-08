@@ -5,16 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16604b80-af21-40d0-9d42-1bbef583743b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/servlets/users/UserCheckLoginServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/servlets/users/UserCheckServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/servlets/TestUserServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/daos/TestManagerDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/datastructure/TestUDArray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/TicketServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daos/TicketDaoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/servlets/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/UserServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/users/UserCheckLoginServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/servlets/users/UserCheckServlet.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/servlets/TestTicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/servlets/TestTicketServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/tickets.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/tickets.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/daos/ManagerDaoTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/daos/TicketDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/daos/TicketDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/daos/UserDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/daos/UserDaoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,81 +60,78 @@
     </key>
   </component>
   <component name="RunManager" selected="Smart Tomcat.expanse-tracker">
-    <configuration name="TestTicketServlet.shouldGetATicket" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestManagerDao" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Reimbursement-management" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="servlets.*" />
+          <option name="PATTERN" value="daos.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="servlets" />
-      <option name="MAIN_CLASS_NAME" value="servlets.TestTicketServlet" />
-      <option name="METHOD_NAME" value="shouldGetATicket" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestTicketServlet.shouldPostATicket" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Reimbursement-management" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="servlets.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="servlets" />
-      <option name="MAIN_CLASS_NAME" value="servlets.TestTicketServlet" />
-      <option name="METHOD_NAME" value="shouldPostATicket" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestTicketServlet.shouldUpdateATicket" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Reimbursement-management" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="servlets.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="servlets" />
-      <option name="MAIN_CLASS_NAME" value="servlets.TestTicketServlet" />
-      <option name="METHOD_NAME" value="shouldUpdateATicket" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestUserServlet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Reimbursement-management" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="servlets.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="servlets" />
-      <option name="MAIN_CLASS_NAME" value="servlets.TestUserServlet" />
+      <option name="PACKAGE_NAME" value="daos" />
+      <option name="MAIN_CLASS_NAME" value="daos.TestManagerDao" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestUserServlet.shouldGetUsers" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestUDArray" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Reimbursement-management" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="servlets.*" />
+          <option name="PATTERN" value="datastructure.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="servlets" />
-      <option name="MAIN_CLASS_NAME" value="servlets.TestUserServlet" />
-      <option name="METHOD_NAME" value="shouldGetUsers" />
+      <option name="PACKAGE_NAME" value="datastructures" />
+      <option name="MAIN_CLASS_NAME" value="datastructure.TestUDArray" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestUDArray.shouldGetContainer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Reimbursement-management" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="datastructure.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="datastructure" />
+      <option name="MAIN_CLASS_NAME" value="datastructure.TestUDArray" />
+      <option name="METHOD_NAME" value="shouldGetContainer" />
       <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TicketDaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Reimbursement-management" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="daos.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="daos" />
+      <option name="MAIN_CLASS_NAME" value="daos.TicketDaoTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserDaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Reimbursement-management" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="daos.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="daos" />
+      <option name="MAIN_CLASS_NAME" value="daos.UserDaoTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -178,19 +178,19 @@
     </configuration>
     <list>
       <item itemvalue="Smart Tomcat.expanse-tracker" />
-      <item itemvalue="JUnit.TestTicketServlet.shouldGetATicket" />
-      <item itemvalue="JUnit.TestTicketServlet.shouldPostATicket" />
-      <item itemvalue="JUnit.TestTicketServlet.shouldUpdateATicket" />
-      <item itemvalue="JUnit.TestUserServlet.shouldGetUsers" />
-      <item itemvalue="JUnit.TestUserServlet" />
+      <item itemvalue="JUnit.TestUDArray" />
+      <item itemvalue="JUnit.TestUDArray.shouldGetContainer" />
+      <item itemvalue="JUnit.TestManagerDao" />
+      <item itemvalue="JUnit.UserDaoTest" />
+      <item itemvalue="JUnit.TicketDaoTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestUserServlet.shouldGetUsers" />
-        <item itemvalue="JUnit.TestUserServlet" />
-        <item itemvalue="JUnit.TestTicketServlet.shouldUpdateATicket" />
-        <item itemvalue="JUnit.TestTicketServlet.shouldPostATicket" />
-        <item itemvalue="JUnit.TestTicketServlet.shouldGetATicket" />
+        <item itemvalue="JUnit.TicketDaoTest" />
+        <item itemvalue="JUnit.TestManagerDao" />
+        <item itemvalue="JUnit.UserDaoTest" />
+        <item itemvalue="JUnit.TestUDArray" />
+        <item itemvalue="JUnit.TestUDArray.shouldGetContainer" />
       </list>
     </recent_temporary>
   </component>
@@ -229,15 +229,21 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Reimbursement_management$TicketDaoTest_shouldNotDeleteTicketById.ic" NAME="TicketDaoTest.shouldNotDeleteTicketById Coverage Results" MODIFIED="1651854653969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Reimbursement_management$UserDaoTest_shouldUpdateAUser.ic" NAME="UserDaoTest.shouldUpdateAUser Coverage Results" MODIFIED="1651802932666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Reimbursement_management$TestTicketServlet.ic" NAME="TestTicketServlet Coverage Results" MODIFIED="1651983197641" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Reimbursement_management$TestTicketServlet.ic" NAME="TestTicketServlet Coverage Results" MODIFIED="1652037910897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>servlets.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Reimbursement_management$UserDaoTest.ic" NAME="UserDaoTest Coverage Results" MODIFIED="1651971138889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Reimbursement_management$TestUDArray.ic" NAME="TestUDArray Coverage Results" MODIFIED="1652046953121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>datastructure.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Reimbursement_management$UserDaoTest.ic" NAME="UserDaoTest Coverage Results" MODIFIED="1652047848230" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>daos.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Reimbursement_management$TicketDaoTest.ic" NAME="TicketDaoTest Coverage Results" MODIFIED="1651971208324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Reimbursement_management$TicketDaoTest.ic" NAME="TicketDaoTest Coverage Results" MODIFIED="1652048013145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>daos.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/Reimbursement_management$TicketDaoTest_shouldNotUpdateATicketById.ic" NAME="TicketDaoTest.shouldNotUpdateATicketById Coverage Results" MODIFIED="1651873306098" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Reimbursement_management$TestManagerDao.ic" NAME="TestManagerDao Coverage Results" MODIFIED="1652047907787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>daos.*</FILTER>
+    </SUITE>
   </component>
 </project>

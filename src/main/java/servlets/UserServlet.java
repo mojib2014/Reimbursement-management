@@ -218,16 +218,16 @@ public class UserServlet extends HttpServlet {
         return null;
     }
 
-    private int getIdFromReq(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        int id = 0;
-        try {
-            id = Integer.parseInt(req.getParameter("id"));
-        }catch (NumberFormatException ex) {
-            res.setStatus(500);
-            res.getWriter().print(ex.getLocalizedMessage());
-        }
-        return id;
-    }
+//    private int getIdFromReq(HttpServletRequest req, HttpServletResponse res) throws IOException {
+//        int id = 0;
+//        try {
+//            id = Integer.parseInt(req.getParameter("id"));
+//        }catch (NumberFormatException ex) {
+//            res.setStatus(500);
+//            res.getWriter().print(ex.getLocalizedMessage());
+//        }
+//        return id;
+//    }
 
     private int getUserIdFromCookies(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();

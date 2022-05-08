@@ -76,6 +76,13 @@ public class TicketDaoTest {
     }
 
     @Test
+    public void shouldNotDeleteTicketById() {
+        boolean res = ticketDao.delete(100);
+
+        assertFalse(res);
+    }
+
+    @Test
     public void shouldGetATicketById() {
         Ticket dbTicket = ticketDao.getById(1);
 
