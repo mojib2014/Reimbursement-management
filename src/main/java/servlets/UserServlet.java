@@ -5,18 +5,18 @@ import com.google.gson.Gson;
 import daos.DaoFactory;
 import daos.UserDao;
 import datastructure.UDArray;
+import entities.Ticket;
 import entities.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class UserServlet extends HttpServlet {
 
@@ -24,23 +24,32 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("application/json");
+        PrintWriter out = res.getWriter();
+        int id = 0;
         try {
-            String endpoint = req.getServletPath();
-
-            switch (endpoint) {
-                case "/users":
-                    getAllUsers(req, res);
-                    break;
-                case "/users/user":
-                    getUser(req, res);
-                    break;
-                default:
-                    res.getWriter().print("We don't support that endpoint at the moment!");
+            id = Integer.parseInt(req.getParameter("id"));
+        } catch (NumberFormatException e) {
+            String users = getAllUsers(req, res);
+            res.setStatus(200);
+            out.print(users);
+            return;
+        }
+        try {
+            int user_id = getUserIdFromCookies(req);
+            if(user_id == 0) {
+                res.setStatus(403);
+                out.print("Access denied, Please login or register!");
+            } else {
+                ObjectMapper mapper = new ObjectMapper();
+                User user = userDao.getById(id);
+                String jsonUser = mapper.writeValueAsString(user);
+                res.setStatus(200);
+                out.print(jsonUser);
             }
-        } catch (IOException ex) {
+        }catch (IOException ex) {
             res.setStatus(500);
-            res.getWriter().print(ex.getLocalizedMessage());
-            System.out.println(ex.getLocalizedMessage());
+            out.print("Something went wrong processing your request!");
         }
     }
 
@@ -108,11 +117,14 @@ public class UserServlet extends HttpServlet {
             out = res.getWriter();
             User user = getInputFromReq(req, res);
             user.setUser_type("Employee");
-            userDao.register(user);
-            res.setStatus(200);
-            Cookie cookie = new Cookie("user", user.getName());
-            res.addCookie(cookie);
-            out.print("User successfully registered!");
+            User dbUser = userDao.register(user);
+            if(dbUser == null) {
+                res.setStatus(500);
+                out.print("Something wen wrong, please try again!");
+            }else {
+                res.setStatus(200);
+                out.print("User successfully registered!");
+            }
         }catch (IOException ex) {
             res.setStatus(500);
             out.print(ex.getLocalizedMessage());
@@ -133,10 +145,8 @@ public class UserServlet extends HttpServlet {
             User user = userDao.login(userInput.getEmail(), userInput.getPassword());
             if(user != null) {
                 String jsonUser = new Gson().toJson(user);
-                String name = user.getName();
                 res.setStatus(200);
                 Cookie cookie = new Cookie("user_id", URLEncoder.encode( String.valueOf(user.getUser_id()), "UTF-8" ));
-
                 cookie.setMaxAge(10000);
                 res.addCookie(cookie);
                 res.setHeader("isLoggedIn", "true");
@@ -149,39 +159,38 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    private void getUser(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        PrintWriter out = null;
-        try {
-            int user_id = getUserIdFromCookies(req);
-            int user_id_to_get = getIdFromReq(req, res);
-            out = res.getWriter();
-            if(user_id != 0) {
-                ObjectMapper mapper = new ObjectMapper();
-                User user = userDao.getById(user_id_to_get);
-                String jsonUser = mapper.writeValueAsString(user);
-                res.setStatus(200);
-                out.print(jsonUser);
-            } else {
-                res.setStatus(403);
-                out.print("Access denied, Please login or register!");
-            }
-        }catch (IOException ex) {
-            res.setStatus(500);
-            out.print("Something went wrong processing your request!");
-        }
-    }
+//    private void getUser(HttpServletRequest req, HttpServletResponse res) throws IOException {
+//        PrintWriter out = null;
+//        try {
+//            int user_id = getUserIdFromCookies(req);
+//            out = res.getWriter();
+//            if(user_id != 0) {
+//                ObjectMapper mapper = new ObjectMapper();
+//                User user = userDao.getById();
+//                String jsonUser = mapper.writeValueAsString(user);
+//                res.setStatus(200);
+//                out.print(jsonUser);
+//            } else {
+//                res.setStatus(403);
+//                out.print("Access denied, Please login or register!");
+//            }
+//        }catch (IOException ex) {
+//            res.setStatus(500);
+//            out.print("Something went wrong processing your request!");
+//        }
+//    }
 
-    private void getAllUsers(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    private String getAllUsers(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = null;
         try {
+            out = res.getWriter();
             int user_id = getUserIdFromCookies(req);
             if(user_id != 0) {
                 out = res.getWriter();
                 ObjectMapper mapper = new ObjectMapper();
                 UDArray<User> userList = userDao.getAll();
                 String users = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userList.getContainer());
-                res.setStatus(200);
-                out.print(users);
+                return users;
             }else {
                 res.setStatus(403);
                 out.print("Access denied, Please login or register!");
@@ -190,6 +199,7 @@ public class UserServlet extends HttpServlet {
             res.setStatus(500);
             out.print(ex.getLocalizedMessage());
         }
+        return null;
     }
 
     private User getInputFromReq(HttpServletRequest req, HttpServletResponse res) {
@@ -223,10 +233,16 @@ public class UserServlet extends HttpServlet {
         Cookie[] cookies = req.getCookies();
         String cookieName = "user_id";
         String user_id = "";
+        if(cookies == null) {
+            return 0;
+        }
         for ( int i=0; i<cookies.length; i++) {
             Cookie cookie = cookies[i];
             if (cookieName.equals(cookie.getName()))
                 user_id += cookie.getValue();
+        }
+        if(user_id == "") {
+            return 0;
         }
         return Integer.parseInt(user_id);
     }

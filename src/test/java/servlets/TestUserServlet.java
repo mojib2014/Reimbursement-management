@@ -2,37 +2,34 @@ package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import daos.DaoFactory;
-import daos.TicketDao;
 import daos.UserDao;
-import entities.Ticket;
-import org.junit.jupiter.api.Test;
+import entities.User;
 import org.junit.jupiter.api.BeforeEach;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.*;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
-public class TestTicketServlet {
-    private static TicketDao ticketDao;
+public class TestUserServlet {
     private static UserDao userDao;
 
     @BeforeEach
     public void setup() {
-        ticketDao = DaoFactory.getTicketDao();
         userDao = DaoFactory.getUserDao();
         userDao.initTables();
         userDao.fillTables();
-        ticketDao.initTables();
-        ticketDao.fillTables();
     }
 
     @Test
-    public void shouldGetTicketById() throws IOException, ServletException {
+    public void shouldGetUsers() throws IOException, ServletException {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse res = mock(HttpServletResponse.class);
 
@@ -43,23 +40,27 @@ public class TestTicketServlet {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        String ticket1 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticketDao.getById(1));
-        String ticket2 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticketDao.getById(2));
-        String ticket3 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticketDao.getById(3));
-        String ticket4 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticketDao.getById(4));
-
-        new TicketServlet().doGet(req, res);
+        String user1 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDao.getById(1));
+        String user2 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDao.getById(2));
+        String user3 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDao.getById(3));
+        String user4 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDao.getById(4));
+        Cookie cookie = new Cookie("user_id", "1");
+        res.addCookie(cookie);
+        new UserServlet().doPost(req, res);
+        new UserServlet().doGet(req, res);
 
         printWriter.flush();
 
-        assertTrue(stringWriter.toString().contains(ticket1));
-        assertTrue(stringWriter.toString().contains(ticket2));
-        assertTrue(stringWriter.toString().contains(ticket3));
-        assertTrue(stringWriter.toString().contains(ticket4));
+        System.out.println(user1);
+        System.out.println(stringWriter.toString());
+        assertTrue(stringWriter.toString().contains(user1));
+        assertTrue(stringWriter.toString().contains(user2));
+        assertTrue(stringWriter.toString().contains(user3));
+        assertTrue(stringWriter.toString().contains(user4));
     }
 
     @Test
-    public void shouldGetATicket() throws IOException, ServletException {
+    public void shouldGetAUser() throws IOException, ServletException {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse res = mock(HttpServletResponse.class);
 
@@ -77,13 +78,13 @@ public class TestTicketServlet {
         printWriter.flush();
 
         ObjectMapper mapper = new ObjectMapper();
-        String ticket1 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticketDao.getById(1));
+        String ticket1 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDao.getById(1));
 
         assertTrue(stringWriter.toString().contains(ticket1));
     }
 
     @Test
-    public void shouldPostATicket() throws IOException, ServletException {
+    public void shouldRegisterAUser() throws IOException, ServletException {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse res = mock(HttpServletResponse.class);
 
@@ -100,13 +101,13 @@ public class TestTicketServlet {
         new TicketServlet().doPost(req, res);
 
         writer.flush();
-        Ticket ticket1 = ticketDao.getById(5);
-        assertEquals(5, ticket1.getTicket_id());
-        assertEquals(10.5, ticket1.getAmount(), 4);
+        User user1 = userDao.getById(5);
+        assertEquals(5, user1.getUser_id());
+        assertEquals("", user1.getName());
     }
 
     @Test
-    public void shouldUpdateATicket() throws IOException, ServletException {
+    public void shouldLoginAUser() throws IOException, ServletException {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse res = mock(HttpServletResponse.class);
 
@@ -124,8 +125,8 @@ public class TestTicketServlet {
         new TicketServlet().doPut(req, res);
 
         writer.flush();
-        Ticket ticket1 = ticketDao.getById(5);
-        assertEquals(5, ticket1.getTicket_id());
-        assertEquals(20.10, ticket1.getAmount(), 4);
+        User user = userDao.getById(5);
+        assertEquals(5, user.getUser_id());
+        assertEquals("", user.getName(), 4);
     }
 }

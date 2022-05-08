@@ -1,5 +1,6 @@
 package servlets;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import daos.DaoFactory;
@@ -37,7 +38,7 @@ public class TicketServlet extends HttpServlet {
            return;
         }
         Ticket ticket = getTicket(id);
-        String jsonTicket = new Gson().toJson(ticket);
+        String jsonTicket = convertToJsonString(ticket);
         out.print(jsonTicket);
     }
 
@@ -116,5 +117,10 @@ public class TicketServlet extends HttpServlet {
             }
         }
         return null;
+    }
+
+    private String convertToJsonString(Ticket ticket) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticket);
     }
 }

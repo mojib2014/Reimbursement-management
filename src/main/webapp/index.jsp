@@ -4,11 +4,13 @@ pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <body>
+    current session info: ${user.name}
     <header>
         <a href="/reimbursement-management/">Reimbursement Management</a>
         <nav>
             <ul>
                 <li><a href="/reimbursement-management/tickets.jsp">Tickets</a>
+                <li><a href="logout">Logout</a>
             </ul>
         </nav>
     </header>

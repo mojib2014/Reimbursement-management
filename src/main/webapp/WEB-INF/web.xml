@@ -10,10 +10,6 @@
         <servlet-class>servlets.UserServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>user</servlet-name>
-        <servlet-class>servlets.UserServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>register</servlet-name>
         <servlet-class>servlets.UserServlet</servlet-class>
     </servlet>
@@ -51,10 +47,6 @@
     <servlet-mapping>
         <servlet-name>users</servlet-name>
         <url-pattern>/users</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>user</servlet-name>
-        <url-pattern>/users/user</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>register</servlet-name>
