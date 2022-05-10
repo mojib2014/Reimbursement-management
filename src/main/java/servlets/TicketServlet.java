@@ -45,9 +45,9 @@ public class TicketServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         PrintWriter out = res.getWriter();
-        Ticket jsonTicket = getInputFromReq(req, res);
-        String daoRes = ticketDao.insert(jsonTicket);
-        if(daoRes.equals("Success")) {
+        Ticket ticket = getInputFromReq(req, res);
+        String daoRes = ticketDao.insert(ticket);
+        if(daoRes != null && daoRes.equals("Success")) {
             res.setStatus(202);
             out.print("Ticket successfully created!");
         }else {
@@ -59,7 +59,6 @@ public class TicketServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         Ticket ticket = getInputFromReq(req, res);
-        System.out.println("doPut:" + ticket);
         boolean daoRes = ticketDao.update(ticket);
         if(daoRes) {
             res.setStatus(200);
@@ -88,7 +87,6 @@ public class TicketServlet extends HttpServlet {
     }
 
     private Ticket getTicket(int id) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
         return ticketDao.getById(id);
     }
 
@@ -104,17 +102,15 @@ public class TicketServlet extends HttpServlet {
     }
 
     private Ticket getInputFromReq(HttpServletRequest req, HttpServletResponse res) {
+        PrintWriter out = null;
         try {
+            out = res.getWriter();
             ObjectMapper mapper = new ObjectMapper();
-            Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
+            Ticket ticket = mapper.readValue(req.getReader(), Ticket.class);
             return ticket;
         }catch (IOException ex) {
-            try {
-                res.setStatus(500);
-                res.getWriter().print(ex.getLocalizedMessage());
-            }catch (IOException exe) {
-                System.out.println(ex.getLocalizedMessage());
-            }
+            System.out.println(ex.getLocalizedMessage());
+            out.print(ex.getLocalizedMessage());
         }
         return null;
     }

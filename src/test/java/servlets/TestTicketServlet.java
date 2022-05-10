@@ -77,9 +77,14 @@ public class TestTicketServlet {
         printWriter.flush();
 
         ObjectMapper mapper = new ObjectMapper();
-        String ticket1 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticketDao.getById(1));
+        String ticket = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(ticketDao.getById(1));
 
-        assertTrue(stringWriter.toString().contains(ticket1));
+        assertTrue(stringWriter.toString().contains(ticket));
+    }
+
+    @Test
+    public void shouldNotGetAllTicketsIfTableEmpty() {
+
     }
 
     @Test
@@ -87,7 +92,6 @@ public class TestTicketServlet {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse res = mock(HttpServletResponse.class);
 
-//        Ticket ticket = new Ticket(10.5, "new description", "new category", 2);
         FileReader fr = new FileReader("src/test/java/servlets/ticket.txt");
         BufferedReader bf = new BufferedReader(fr);
         when(req.getReader()).thenReturn(bf);
@@ -102,7 +106,27 @@ public class TestTicketServlet {
         writer.flush();
         Ticket ticket1 = ticketDao.getById(5);
         assertEquals(5, ticket1.getTicket_id());
-        assertEquals(10.5, ticket1.getAmount(), 4);
+        assertEquals(10.5, ticket1.getAmount(), 100);
+    }
+
+    @Test
+    public void shouldNotPostATicket() throws IOException, ServletException {
+        HttpServletRequest req = mock(HttpServletRequest.class);
+        HttpServletResponse res = mock(HttpServletResponse.class);
+
+        FileReader fr = new FileReader("src/test/java/servlets/badPostTicket.txt");
+        BufferedReader bf = new BufferedReader(fr);
+        when(req.getReader()).thenReturn(bf);
+
+        // set up the print writer:
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(res.getWriter()).thenReturn(writer);
+
+        new TicketServlet().doPost(req, res);
+
+        writer.flush();
+        assertEquals(stringWriter.toString(), "Something went wrong processing your request");
     }
 
     @Test
@@ -124,8 +148,54 @@ public class TestTicketServlet {
         new TicketServlet().doPut(req, res);
 
         writer.flush();
-        Ticket ticket1 = ticketDao.getById(5);
-        assertEquals(5, ticket1.getTicket_id());
-        assertEquals(20.10, ticket1.getAmount(), 4);
+        Ticket ticket = ticketDao.getById(3);
+        assertEquals(3, ticket.getTicket_id());
+        assertEquals(20.10, ticket.getAmount(), 100);
+    }
+
+    @Test
+    public void shouldNotUpdateATicket() throws IOException, ServletException {
+        HttpServletRequest req = mock(HttpServletRequest.class);
+        HttpServletResponse res = mock(HttpServletResponse.class);
+
+        when(req.getParameter("id")).thenReturn("1");
+
+        FileReader fr = new FileReader("src/test/java/servlets/badPutTicket.txt");
+        BufferedReader bf = new BufferedReader(fr);
+        when(req.getReader()).thenReturn(bf);
+
+        // set up the print writer:
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(res.getWriter()).thenReturn(writer);
+
+        new TicketServlet().doPut(req, res);
+
+        writer.flush();
+
+        assertEquals(stringWriter.toString(), "Something failed");
+    }
+
+    @Test
+    public void shouldDeleteATicket() throws IOException, ServletException {
+        HttpServletRequest req = mock(HttpServletRequest.class);
+        HttpServletResponse res = mock(HttpServletResponse.class);
+
+        when(req.getParameter("id")).thenReturn("1");
+
+        FileReader fr = new FileReader("src/test/java/servlets/ticket.txt");
+        BufferedReader bf = new BufferedReader(fr);
+        when(req.getReader()).thenReturn(bf);
+
+        // set up the print writer:
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(res.getWriter()).thenReturn(writer);
+
+        new TicketServlet().doDelete(req, res);
+
+        writer.flush();
+
+        assertEquals(stringWriter.toString(), "Successfully deleted!");
     }
 }

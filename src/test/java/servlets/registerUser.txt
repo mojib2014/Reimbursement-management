@@ -1,0 +1,1 @@
+{"name": "test", "email": "test@email.com", "password": "test123", "user_type": "Employee"}

@@ -14,8 +14,7 @@ public class TicketDaoImpl implements TicketDao {
     public TicketDaoImpl() { connection = DbFactory.getConnection();}
 
     @Override
-    public String insert(Ticket data) {
-        Ticket ticket = (Ticket) data;
+    public String insert(Ticket ticket) {
         String query = "INSERT INTO tickets (ticket_id, amount, description, created_at, category, user_id) VALUES(default, ?, ?, ?, ?, ?);";
         String resultString = null;
         try {
@@ -148,7 +147,7 @@ public class TicketDaoImpl implements TicketDao {
      */
     @Override
     public void initTables() {
-        String query = "CREATE TABLE IF NOT EXISTS tickets(ticket_id serial primary key, amount float8 not null check(amount >0), " +
+        String query = "DROP TABLE IF EXISTS tickets CASCADE; CREATE TABLE tickets(ticket_id serial primary key, amount float8 not null check(amount >0), " +
                 "description varchar(100) not null, " +
                 "created_at timestamp default(Current_timestamp), " +
                 "updated_at timestamp, " +
@@ -179,11 +178,22 @@ public class TicketDaoImpl implements TicketDao {
             System.out.println(ex.getLocalizedMessage());
         }
     }
+
+    public void truncateTable() {
+        String query = "TRUNCATE TABLE tickets;";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeUpdate();
+        }catch(SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+    }
     // End of test setup
 
     private Ticket getTicketFromResultSet(ResultSet resultSet) {
         try {
             int ticket_id = resultSet.getInt("ticket_id");
+            System.out.println("Ticket_id: " + ticket_id);
             double amount = resultSet.getDouble("amount");
             String description = resultSet.getString("description");
             Timestamp created_at = resultSet.getTimestamp("created_at");

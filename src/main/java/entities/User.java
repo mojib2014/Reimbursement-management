@@ -7,6 +7,13 @@ public class User {
     private String password;
     private String user_type;
 
+    public User() {
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public User(int user_id, String name, String email, String password, String user_type) {
         this.user_id = user_id;
@@ -21,9 +28,6 @@ public class User {
         this.email = email;
         this.password = password;
         this.user_type = user_type;
-    }
-
-    public User() {
     }
 
     public int getUser_id() {

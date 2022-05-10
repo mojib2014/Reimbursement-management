@@ -1,0 +1,1 @@
+{"user_id": 1, "name": "update name", "email": "updated@email.com", "password": "user1123", "user_type": "Employee"}

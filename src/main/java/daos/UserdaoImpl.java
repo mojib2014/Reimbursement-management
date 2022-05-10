@@ -42,7 +42,6 @@ public class UserdaoImpl implements UserDao {
             }
         } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());
-            e.printStackTrace();
         }
         return null;
     }
@@ -216,7 +215,7 @@ public class UserdaoImpl implements UserDao {
      */
     @Override
     public void initTables() {
-        String query = "CREATE TABLE IF NOT EXISTS users(user_id serial primary key, name varchar(50) not null, email " +
+        String query = "DROP TABLE users IF EXISTS CASCADE; CREATE TABLE users(user_id serial primary key, name varchar(50) not null, email " +
                 "varchar(100) not null unique, password varchar(200) not null, user_type varchar(50));";
 
         try {

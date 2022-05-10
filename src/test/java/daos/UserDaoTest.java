@@ -2,7 +2,6 @@ package daos;
 
 import datastructure.UDArray;
 import entities.User;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -24,7 +23,7 @@ public class UserDaoTest {
         User dbUser = userDao.register(user);
 
         assertEquals("newUser", dbUser.getName());
-        assertEquals(9, dbUser.getUser_id());
+        assertEquals(5, dbUser.getUser_id());
     }
 
     @Test
@@ -45,7 +44,7 @@ public class UserDaoTest {
 
         User loggedInUser = userDao.login(dbUser.getEmail(), user.getPassword());
 
-        assertEquals(6, loggedInUser.getUser_id());
+        assertEquals(5, loggedInUser.getUser_id());
     }
 
     @Test
@@ -97,7 +96,7 @@ public class UserDaoTest {
     @Test
     public void shouldGetAllUsers() {
         UDArray<User> users = userDao.getAll();
-        assertEquals(5, users.getSize());
+        assertEquals(4, users.getSize());
         assertEquals(2, users.get(1).getUser_id());
     }
 }

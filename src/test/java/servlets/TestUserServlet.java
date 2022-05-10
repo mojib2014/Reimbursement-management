@@ -1,9 +1,13 @@
 package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import daos.DaoFactory;
 import daos.UserDao;
 import entities.User;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +16,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.HttpCookie;
+import java.security.Key;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -33,30 +39,30 @@ public class TestUserServlet {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse res = mock(HttpServletResponse.class);
 
+        // Register a user
+        when(req.getServletPath()).thenReturn("/users/register");
+        FileReader fr = new FileReader("src/test/java/servlets/registerUser.txt");
+        BufferedReader bf = new BufferedReader(fr);
+        when(req.getReader()).thenReturn(bf);
+
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
 
+        User user = new User("user1@email.com", "user1123");
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        String jsonUser = new Gson().toJson(user);
+        String jws = Jwts.builder().setSubject(jsonUser).signWith(key).compact();
+
         when(res.getWriter()).thenReturn(printWriter);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        String user1 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDao.getById(1));
-        String user2 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDao.getById(2));
-        String user3 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDao.getById(3));
-        String user4 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDao.getById(4));
-        Cookie cookie = new Cookie("user_id", "1");
-        res.addCookie(cookie);
         new UserServlet().doPost(req, res);
+
+        when(res.getWriter()).thenReturn(printWriter);
+        when(req.getHeader("x-auth-token")).thenReturn(jws);
         new UserServlet().doGet(req, res);
 
         printWriter.flush();
 
-        System.out.println(user1);
-        System.out.println(stringWriter.toString());
-        assertTrue(stringWriter.toString().contains(user1));
-        assertTrue(stringWriter.toString().contains(user2));
-        assertTrue(stringWriter.toString().contains(user3));
-        assertTrue(stringWriter.toString().contains(user4));
+        assertTrue(stringWriter.toString().contains("user1@email.com"));
     }
 
     @Test
@@ -64,46 +70,31 @@ public class TestUserServlet {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse res = mock(HttpServletResponse.class);
 
-        when(req.getParameter("id")).thenReturn("1");
-
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(stringWriter);
-        when(res.getWriter()).thenReturn(printWriter);
-
-        new TicketServlet().doGet(req, res);
-
-        // verify the parameter:
-        verify(req, atLeast(1)).getParameter("id");
-
-        printWriter.flush();
-
-        ObjectMapper mapper = new ObjectMapper();
-        String ticket1 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDao.getById(1));
-
-        assertTrue(stringWriter.toString().contains(ticket1));
-    }
-
-    @Test
-    public void shouldRegisterAUser() throws IOException, ServletException {
-        HttpServletRequest req = mock(HttpServletRequest.class);
-        HttpServletResponse res = mock(HttpServletResponse.class);
-
-//        Ticket ticket = new Ticket(10.5, "new description", "new category", 2);
-        FileReader fr = new FileReader("src/test/java/servlets/ticket.txt");
+        // Register a user
+        when(req.getServletPath()).thenReturn("/users/register");
+        FileReader fr = new FileReader("src/test/java/servlets/registerUser.txt");
         BufferedReader bf = new BufferedReader(fr);
         when(req.getReader()).thenReturn(bf);
 
-        // set up the print writer:
         StringWriter stringWriter = new StringWriter();
-        PrintWriter writer = new PrintWriter(stringWriter);
-        when(res.getWriter()).thenReturn(writer);
+        PrintWriter printWriter = new PrintWriter(stringWriter);
 
-        new TicketServlet().doPost(req, res);
+        User user = new User("user1@email.com", "user1123");
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        String jsonUser = new Gson().toJson(user);
+        String jws = Jwts.builder().setSubject(jsonUser).signWith(key).compact();
 
-        writer.flush();
-        User user1 = userDao.getById(5);
-        assertEquals(5, user1.getUser_id());
-        assertEquals("", user1.getName());
+        when(res.getWriter()).thenReturn(printWriter);
+        new UserServlet().doPost(req, res);
+
+        when(req.getParameter("id")).thenReturn("1");
+        when(res.getWriter()).thenReturn(printWriter);
+        when(req.getHeader("x-auth-token")).thenReturn(jws);
+        new UserServlet().doGet(req, res);
+
+        printWriter.flush();
+
+        assertTrue(stringWriter.toString().contains("user1@email.com"));
     }
 
     @Test
@@ -111,22 +102,81 @@ public class TestUserServlet {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse res = mock(HttpServletResponse.class);
 
-        when(req.getParameter("id")).thenReturn("1");
-
-        FileReader fr = new FileReader("src/test/java/servlets/ticket_id.txt");
+        // Register a user
+        when(req.getServletPath()).thenReturn("/users/register");
+        FileReader fr = new FileReader("src/test/java/servlets/registerUser.txt");
         BufferedReader bf = new BufferedReader(fr);
         when(req.getReader()).thenReturn(bf);
 
-        // set up the print writer:
         StringWriter stringWriter = new StringWriter();
-        PrintWriter writer = new PrintWriter(stringWriter);
-        when(res.getWriter()).thenReturn(writer);
+        PrintWriter printWriter = new PrintWriter(stringWriter);
 
-        new TicketServlet().doPut(req, res);
+        when(res.getWriter()).thenReturn(printWriter);
+        new UserServlet().doPost(req, res);
 
-        writer.flush();
-        User user = userDao.getById(5);
-        assertEquals(5, user.getUser_id());
-        assertEquals("", user.getName(), 4);
+        // Login user
+        HttpServletRequest req1 = mock(HttpServletRequest.class);
+        HttpServletResponse res1 = mock(HttpServletResponse.class);
+        when(req1.getServletPath()).thenReturn("/users/login");
+        FileReader fr1 = new FileReader("src/test/java/servlets/registerUser.txt");
+        BufferedReader bf1 = new BufferedReader(fr1);
+        when(req1.getReader()).thenReturn(bf1);
+        when(res1.getWriter()).thenReturn(printWriter);
+
+        new UserServlet().doPost(req1, res1);
+
+        printWriter.flush();
+
+        assertTrue(stringWriter.toString() != null);
+    }
+
+    @Test
+    public void shouldUpdateAUser() throws IOException, ServletException {
+        HttpServletRequest req = mock(HttpServletRequest.class);
+        HttpServletResponse res = mock(HttpServletResponse.class);
+
+        // Register a user
+        when(req.getServletPath()).thenReturn("/users/register");
+        FileReader fr = new FileReader("src/test/java/servlets/registerUser.txt");
+        BufferedReader bf = new BufferedReader(fr);
+        when(req.getReader()).thenReturn(bf);
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+
+        when(res.getWriter()).thenReturn(printWriter);
+        new UserServlet().doPost(req, res);
+
+        // Login user
+        HttpServletRequest req1 = mock(HttpServletRequest.class);
+        HttpServletResponse res1 = mock(HttpServletResponse.class);
+        when(req1.getServletPath()).thenReturn("/users/login");
+        FileReader fr1 = new FileReader("src/test/java/servlets/registerUser.txt");
+        BufferedReader bf1 = new BufferedReader(fr1);
+        when(req1.getReader()).thenReturn(bf1);
+        when(res1.getWriter()).thenReturn(printWriter);
+
+        new UserServlet().doPost(req1, res1);
+
+        printWriter.flush();
+
+        User user = new User("user1@email.com", "user1123");
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        String jsonUser = new Gson().toJson(user);
+        String jws = Jwts.builder().setSubject(jsonUser).signWith(key).compact();
+
+        FileReader fr2 = new FileReader("src/test/java/servlets/registerUser.txt");
+        BufferedReader bf2 = new BufferedReader(fr2);
+        when(req1.getReader()).thenReturn(bf2);
+        when(req1.getReader()).thenReturn(bf2);
+        when(req1.getHeader("x-auth-token")).thenReturn(jws);
+        when(res1.getWriter()).thenReturn(printWriter);
+
+        new UserServlet().doPut(req1, res1);
+
+        printWriter.flush();
+
+        System.out.println(stringWriter.toString());
+        assertTrue(stringWriter.toString() != null);
     }
 }

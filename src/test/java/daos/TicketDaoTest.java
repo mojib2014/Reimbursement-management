@@ -32,7 +32,7 @@ public class TicketDaoTest {
         String res = ticketDao.insert(ticket);
 
         assertEquals("Success", res);
-        assertEquals(6, ticket.getTicket_id());
+        assertEquals(5, ticket.getTicket_id());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class TicketDaoTest {
     public void shouldGetATicketById() {
         Ticket dbTicket = ticketDao.getById(1);
 
-        assertEquals(20.5, dbTicket.getAmount(), 2);
+        assertEquals(25.5, dbTicket.getAmount(), 100);
         assertEquals(1, dbTicket.getTicket_id());
     }
 
